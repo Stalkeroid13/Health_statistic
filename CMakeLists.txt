@@ -26,6 +26,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Health_statistic
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        bios.h bios.cpp
+        exercise.h exercise.cpp
+        workout.h workout.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Health_statistic APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
