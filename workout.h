@@ -1,9 +1,9 @@
 #ifndef TOGETHER_PROJECT_WORKOUT_H
 #define TOGETHER_PROJECT_WORKOUT_H
 
-#include <iostream>
+//#include <iostream>
 #include <vector>
-#include <unordered_map>
+//#include <unordered_map>
 #include <memory>
 #include "exercise.h"
 #include "bios.h"
