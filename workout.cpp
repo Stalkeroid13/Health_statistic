@@ -1,8 +1,8 @@
 #include <cmath>
 #include <utility>
-#include <sstream>
 #include "workout.h"
 #include "bios.h"
+#include "exercisefactory.h"
 
 using namespace std;
 
@@ -15,14 +15,14 @@ Workout::Workout(string date, const BIOS& bios) : date_(std::move(date))
 
 void Workout::AddExercise(unique_ptr<Exercise> exercise)
 {
-    exercises_.push_back(move(exercise));
+    exercises_.push_back(std::move(exercise));
 }
 
 void Workout::LoadExercisesFromBIOS(const BIOS& bios)
 {
     vector<string> entries = bios.GetValues(date_);
     for (const auto& entry: entries)
-        exercises_.push_back(ParseExercise(entry));
+        exercises_.push_back(ExerciseFactory::Create(entry));
 }
 
 void Workout::Display() const

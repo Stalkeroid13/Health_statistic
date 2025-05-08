@@ -2,10 +2,7 @@
 #define TOGETHER_PROJECT_EXERCISE_H
 
 #include <iostream>
-#include <vector>
 #include <unordered_map>
-#include <memory>
-//#include "workout.h"
 #include "bios.h"
 
 // ---------------------------ADDITIONAL FUNCTIONS----------------------------------------------------------------------
