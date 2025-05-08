@@ -24,6 +24,14 @@ struct PhysicalTest
     int GetPhysicalResult() const;
 };
 
+struct ExerciseResult
+{
+    int actual_reps = 0;
+    int actual_sets = 0;
+    double score = 0.0;
+};
+
+
 // ---------------------------EXERCISE----------------------------------------------------------------------------------
 
 class Exercise
@@ -75,6 +83,7 @@ private:
     int ideal_repetitions_{};      // Ідеальна кількість повторень
     int ideal_sets_{};             // Ідеальна кількість підходів
     double performance_score_{};   // Оцінка виконання вправи
+    ExerciseResult result_; // фактичні дані + оцінка
 
     // Хеш-таблиця ідеальних параметрів вправ
     unordered_map<string, pair<int, int>> exercise_ideal_data_;
@@ -93,7 +102,10 @@ public:
                         const BIOS& bios);
 
     // Запит параметрів у користувача
-    void RequestUserData();
+    void SetUserResult(int actual_reps, int actual_sets);
+
+
+    double GetPerformanceScore() const;
 
     // Виведення результатів
     void Display();
