@@ -2,35 +2,8 @@
 #define TOGETHER_PROJECT_EXERCISE_H
 
 #include <iostream>
-#include <unordered_map>
 #include "bios.h"
-
-// ---------------------------ADDITIONAL FUNCTIONS----------------------------------------------------------------------
-
-struct PhysicalTest
-{
-    float weight;    //kilograms
-    float height;    //meters
-
-    int push_ups;        //count per 1 min
-    int sit_downs;       //count per 1 min
-    int plank;           //sec
-    int Coopers_test;    //min
-    int flexibility;     //3 steps
-    int front_jump;      //cm
-
-    float GetMassIndex();
-
-    int GetPhysicalResult() const;
-};
-
-struct ExerciseResult
-{
-    int actual_reps = 0;
-    int actual_sets = 0;
-    double score = 0.0;
-};
-
+#include "physical_test.h"
 
 // ---------------------------EXERCISE----------------------------------------------------------------------------------
 
@@ -75,36 +48,26 @@ public:
 
 // ---------------------------PERFORMANCE-EXERCISE----------------------------------------------------------------------
 
+struct ExerciseResult
+{
+    int actual_reps = 0;
+    int actual_sets = 0;
+    double score = 0.0;
+};
+
 class PerformanceExercise : public Exercise
 {
 private:
-
     PhysicalTest physical_test_; // Фізичні тести користувача
-    int ideal_repetitions_{};      // Ідеальна кількість повторень
-    int ideal_sets_{};             // Ідеальна кількість підходів
     double performance_score_{};   // Оцінка виконання вправи
     ExerciseResult result_; // фактичні дані + оцінка
-
-    // Хеш-таблиця ідеальних параметрів вправ
-    unordered_map<string, pair<int, int>> exercise_ideal_data_;
-
-    // Завантаження ідеальних параметрів вправ з BIOS
-    void LoadIdealDataFromBIOS(const BIOS& bios);
-
-    // Розрахунок ідеальних параметрів для користувача
-    void CalculateIdealParameters();
-
-    // Розрахунок оцінки виконання
-    double CalculatePerformanceScore(int actual_repetitions, int actual_sets) const;
 
 public:
     PerformanceExercise(const string& name, const string& muscle_group, const PhysicalTest& physical_test,
                         const BIOS& bios);
 
-    // Запит параметрів у користувача
-    void SetUserResult(int actual_reps, int actual_sets);
-
-
+    // Встановлення параметрів користувача
+    void SetUserResult(int actual_reps, int actual_sets, double score);
     double GetPerformanceScore() const;
 
     // Виведення результатів

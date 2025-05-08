@@ -4,7 +4,6 @@
 #include <vector>
 #include <memory>
 #include "exercise.h"
-#include "bios.h"
 
 using namespace std;
 
@@ -17,11 +16,9 @@ private:
     string date_;
 
 public:
-    Workout(string date, const BIOS& bios);
+    Workout(string date, vector<unique_ptr<Exercise>> exercise_list);
 
     void AddExercise(unique_ptr<Exercise> exercise);
-
-    void LoadExercisesFromBIOS(const BIOS& bios);
 
     void Display() const;
 };
