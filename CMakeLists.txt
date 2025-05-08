@@ -32,10 +32,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         foodlist.h foodlist.cpp
         foodstatistics.h foodstatistics.cpp
         nutritionstrategieas.h nutritionstrategieas.cpp
-
         foodform.h foodform.cpp foodform.ui
         foodchangeinfo.h foodchangeinfo.cpp foodchangeinfo.ui
-
+        nutrition.ui
+        exercisefactory.h exercisefactory.cpp
+        performance_evaluator.h performance_evaluator.cpp
+        ideal_exercise_repository.h ideal_exercise_repository.cpp
+        physical_test.h physical_test.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Health_statistic APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
