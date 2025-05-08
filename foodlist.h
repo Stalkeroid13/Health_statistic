@@ -27,10 +27,10 @@ public:
     void Remove(string objectName);
     void Change(string objectName, string newInfo);
     string Read(string nameOfProduct);
+    unordered_map<string, string> catalogue_;
 private:
     bool DownloadData();
     bool UploadData();
-    unordered_map<string, string> catalogue_;
 };
 
 #endif //FOODLIST_H

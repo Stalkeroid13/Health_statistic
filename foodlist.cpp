@@ -90,8 +90,8 @@ void FoodList::Add(string object)
         temp=ip->second;
         if(temp.find(token)!=string::npos)
         {
-            cout<<"Продукт з такими характеристиками вже є в каталозі продуктів і страв:"<<endl;
-            cout<<temp<<endl;
+            //cout<<"Продукт з такими характеристиками вже є в каталозі продуктів і страв:"<<endl;
+            //cout<<temp<<endl;
             return;
         }
     }
