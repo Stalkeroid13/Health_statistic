@@ -2,8 +2,10 @@
 #define FOODFORM_H
 
 #include <QDialog>
+#include "bios.h"
 #include "foodlist.h"
 #include "foodchangeinfo.h"
+#include "foodstatistics.h"
 
 namespace Ui {
 class foodform;
@@ -19,15 +21,20 @@ public:
     ~foodform();
 
 private slots:
-    void onSaveButtonClicked();
+    void updateList();
+    void updateDiary();
     void onSaveButtonClickedAdd();
     void onNextButtonClicked();
+    void addNoteInDiary();
 
 private:
     Ui::foodform *ui;
     FoodChangeInfo *foodChangeInfoWindow;
-    FoodList food_list_object;
+    FoodStatistics food_list_object;
+    //BIOS diary;
+    //FoodList food_list_object;
     void updateTable();
+    void updateDiaryTable();
 };
 
 #endif // FOODFORM_H

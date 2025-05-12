@@ -30,7 +30,7 @@ public:
     float NormOfCalories(int sex, int weight, int high, int age, int activity_score);
     vector<float> OneDayAnalysis(string time);
     virtual float GetStatistics(int sex, int weight, int high, int age, int activity_score, string starTime, string endTime);
-private:
+//private:
     DiaryManager nutrition_diary_;
 };
 

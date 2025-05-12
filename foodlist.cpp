@@ -84,8 +84,14 @@ void FoodList::Add(string object)
     getline(stream,name,' ');
     getline(stream,temp,'\n');
 
-    auto ip=catalogue_.begin();
-    for(ip;ip!=catalogue_.end();ip++)
+    //auto ip=catalogue_.begin();
+    //auto& prod=catalogue_[name];
+    for(const auto& [key,value]:catalogue_)
+    {
+        if(value==object)
+            return;
+    }
+    /*for(ip;ip!=catalogue_.end();ip++)
     {
         temp=ip->second;
         if(temp.find(token)!=string::npos)
@@ -94,7 +100,7 @@ void FoodList::Add(string object)
             //cout<<temp<<endl;
             return;
         }
-    }
+    }*/
     catalogue_.insert({name,object});
 }
 
