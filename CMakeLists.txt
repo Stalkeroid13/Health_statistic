@@ -40,6 +40,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         physical_test.h physical_test.cpp
 	dream.h dream.cpp
 	dream_user.h dream_user.cpp
+        messegefromdevs.h messegefromdevs.cpp messegefromdevs.ui
 
     )
 # Define target properties for Android with Qt 6 as:

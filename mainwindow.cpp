@@ -1,11 +1,14 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(ui->pushButton_4, &QPushButton::clicked, this, &MainWindow::GoToMessage);
+    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::GoToFoodForm);
 }
 
 MainWindow::~MainWindow()
@@ -13,9 +16,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+//перехід до категорії харчування
+void MainWindow::GoToFoodForm()
 {
     foodForm = new foodform(this);
+    //foodForm->setAttribute(Qt::WA_DeleteOnClose);
     foodForm->show();
 }
 
+//перехід до вікна "Від розробників"
+void MainWindow::GoToMessage()
+{
+    message = new MessegeFromDevs(this);
+    message->show();
+}

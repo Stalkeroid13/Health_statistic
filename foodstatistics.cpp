@@ -25,6 +25,7 @@ vector<float> FoodStatistics::OneDayAnalysis(string time)
     vector<float> result;
     return result;
 }
+
 float FoodStatistics::GetStatistics(int sex, int weight, int high, int age, int activity_score, string starTime, string endTime)
 {
     return 0;
@@ -47,7 +48,6 @@ Product FoodStatistics::NutritionValueOfMeal(int weight, string nameOfProduct)
 
     return resultProduct;
 }
-
 
 //adding, reading, changing and deleting info in diary
 void DiaryManager::AddNoteAboutFood(string time, string object)

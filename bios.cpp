@@ -60,7 +60,9 @@ bool BIOS::WriteDataToFile(const string& file_name)
     }
 
     // Крок 2: Відкрити файл у режимі "додати до кінця"
-    ofstream file_out(file_name, ios::app);
+    //змінила режим на перезаписування, бо при бажанні редагування записів
+    //з попередніх запусків програми змін не буде
+    ofstream file_out(file_name, ios::trunc);//app);
 
     if (!file_out.is_open())
     {
@@ -74,10 +76,11 @@ bool BIOS::WriteDataToFile(const string& file_name)
         string line = entry.first + " " + entry.second; // Формуємо рядок: "дата об'єкти"
 
         // Якщо такого запису ще немає у файлі, записуємо його
-        if (existingEntries.find(line) == existingEntries.end())
-        {
+        // при перезаписі у файл необхідно записувати всі дані
+        //if (existingEntries.find(line) == existingEntries.end())
+        //{
             file_out << line << endl;
-        }
+        //}
     }
 
     file_out.close();
@@ -86,7 +89,9 @@ bool BIOS::WriteDataToFile(const string& file_name)
 
 BIOS::BIOS()
 {
-    LoadDataFromFile("Exercise.txt");
+    //закоментувала, бо біос один для всіх і при виклику конструктора
+    //для категорій сну та харчування будуть зчитуватися дані з неправильного файлу
+    //LoadDataFromFile("Exercise.txt");
 }
 
 // Додати новий запис у хеш-таблицю
@@ -191,6 +196,8 @@ string BIOS::findLatestDate()
 
 BIOS::~BIOS()
 {
-    WriteDataToFile("Exercise.txt");
+    //закоментувала, бо біос один для всіх і при виклику деструктора
+    //для категорій сну та харчування дані записуватимуться в не той файл
+    //WriteDataToFile("Exercise.txt");
     general_map_.clear();
 }

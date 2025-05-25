@@ -17,22 +17,19 @@ class foodform : public QDialog
 
 public:
     explicit foodform(QWidget *parent = nullptr);
-    //QString getFoodName()const;
     ~foodform();
 
 private slots:
     void updateList();
     void updateDiary();
-    void onSaveButtonClickedAdd();
-    void onNextButtonClicked();
-    void addNoteInDiary();
+    void addNoteToList();
+    void toChangeForm();
+    void addNoteToDiary();
 
 private:
     Ui::foodform *ui;
     FoodChangeInfo *foodChangeInfoWindow;
     FoodStatistics food_list_object;
-    //BIOS diary;
-    //FoodList food_list_object;
     void updateTable();
     void updateDiaryTable();
 };
