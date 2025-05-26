@@ -10,25 +10,43 @@ foodform::foodform(QWidget *parent)
 {
     ui->setupUi(this);
     food_list_object.nutrition_diary_.diary_.LoadDataFromFile("DiaryFood.txt");
+    food_list_object.nutrition_diary_.list_.DownloadData();
     connect(ui->pushButton_2, &QPushButton::clicked, this, &foodform::updateList);
     connect(ui->pushButton_4, &QPushButton::clicked, this, &foodform::addNoteToList);
     connect(ui->pushButton_5, &QPushButton::clicked, this, &foodform::toChangeForm);
     connect(ui->pushButton_7, &QPushButton::clicked, this, &foodform::updateDiary);
     connect(ui->pushButton_6, &QPushButton::clicked, this, &foodform::addNoteToDiary);
-    //updateDiary();
+    connect(ui->pushButton, &QPushButton::clicked, this, &foodform::generateTotalScore);
+    updateDiary();
+    updateList();
 }
 
 foodform::~foodform()
 {
     food_list_object.nutrition_diary_.diary_.WriteDataToFile("DiaryFood.txt");
+    food_list_object.nutrition_diary_.list_.UploadData();
     delete ui;
 }
 
 void foodform::toChangeForm()
 {
     foodChangeInfoWindow = new FoodChangeInfo(&food_list_object, this);
-    //foodChangeInfoWindow->setAttribute(Qt::WA_DeleteOnClose);
     foodChangeInfoWindow->show();
+}
+
+void foodform::generateTotalScore()
+{
+    //зчитуємо усю необхідну інформацію
+    QString startTime = ui->lineEdit_7->text();
+    QString endTime = ui->lineEdit_8->text();
+
+    float score=100;
+    //food_list_object.GetStatistics();
+    ui->label_5->setText(QString::number(score,'f', 2));
+
+    //очищуємо поля вводу
+    ui->lineEdit_7->clear();
+    ui->lineEdit_8->clear();
 }
 
 void foodform::addNoteToList()
@@ -51,8 +69,6 @@ void foodform::addNoteToList()
     ui->lineEdit_4->clear();
     ui->lineEdit_5->clear();
     ui->lineEdit_6->clear();
-    //ui->label_4->setText(foodName);
-    //updateTable();
 }
 
 void foodform::addNoteToDiary()

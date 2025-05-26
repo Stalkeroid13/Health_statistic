@@ -119,6 +119,5 @@ void FoodChangeInfo::deleteList()
 
 FoodChangeInfo::~FoodChangeInfo()
 {
-    //mainFoodObject->nutrition_diary_.diary_.WriteDataToFile("DiaryFood.txt");
     delete ui;
 }

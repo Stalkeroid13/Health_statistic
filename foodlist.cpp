@@ -130,7 +130,7 @@ void FoodList::Change(string objectName, string newInfo)
 
 bool FoodList::DownloadData()
 {
-    ifstream foodFile("Foods.txt");
+    ifstream foodFile("Food.txt");
     if (!foodFile.is_open()) return false;
     string object;
     Product product;
@@ -155,7 +155,7 @@ bool FoodList::UploadData()
     for(ip;ip!=catalogue_.end();ip++)
     {
         object=ip->second;
-        foodFile << object;
+        foodFile << object <<'\n';
     }
 
     foodFile.close();
