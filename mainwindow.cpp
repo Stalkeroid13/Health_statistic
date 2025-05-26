@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -9,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     connect(ui->pushButton_4, &QPushButton::clicked, this, &MainWindow::GoToMessage);
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::GoToFoodForm);
+    connect(ui->pushButton_6, &QPushButton::clicked, this, &MainWindow::on_pushButton_6_clicked);
 }
 
 MainWindow::~MainWindow()
@@ -30,3 +30,11 @@ void MainWindow::GoToMessage()
     message = new MessegeFromDevs(this);
     message->show();
 }
+
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    dreamForm = new dreamform(this);
+    dreamForm->show();
+}
+

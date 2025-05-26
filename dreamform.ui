@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>dreamform</class>
+ <widget class="QDialog" name="dreamform">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1172</width>
+    <height>642</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>60</y>
+     <width>281</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Додати запис до щоденника:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_date">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>100</y>
+     <width>191</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Введіть дату (dd/mm/yyyy)</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_bedtime">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>100</y>
+     <width>281</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Введіть час засинання (hh:mm)</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_wakeuptime">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>100</y>
+     <width>271</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Введіть час пробудження (hh:mm)</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="AddDream">
+   <property name="geometry">
+    <rect>
+     <x>980</x>
+     <y>100</y>
+     <width>93</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Додати</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>140</y>
+     <width>101</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Журнал сну</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>450</y>
+     <width>971</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Оновити</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>500</y>
+     <width>251</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Згенерувати оцінку</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>170</y>
+     <width>971</width>
+     <height>261</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

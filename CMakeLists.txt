@@ -38,9 +38,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         performance_evaluator.h performance_evaluator.cpp
         ideal_exercise_repository.h ideal_exercise_repository.cpp
         physical_test.h physical_test.cpp
-	dream.h dream.cpp
-	dream_user.h dream_user.cpp
+        dream.h dream.cpp
+        dream_user.h dream_user.cpp
         messegefromdevs.h messegefromdevs.cpp messegefromdevs.ui
+        dreamform.h dreamform.cpp dreamform.ui
+
+
 
     )
 # Define target properties for Android with Qt 6 as:
