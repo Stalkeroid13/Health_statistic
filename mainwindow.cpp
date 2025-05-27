@@ -32,6 +32,11 @@ void MainWindow::GoToMessage()
 }
 
 void MainWindow::on_pushButton_6_clicked()
+{
+    dreamForm = new dreamform(this);
+    dreamForm->show();
+}
+
 void MainWindow::GoToDream()
 {
     dreamForm = new dreamform(this);
