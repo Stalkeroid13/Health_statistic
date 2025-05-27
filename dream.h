@@ -6,6 +6,7 @@
 #define DREAM_H
 #include <iostream>
 #include <sstream>
+#include <QString>
 #include "bios.h"
 using namespace std;
 
@@ -24,7 +25,7 @@ public:
 
     void countDuration();
     void countSleepType();
-    virtual void print();
+    virtual QString toQString() const;
 
     // Геттери
     string getDate() const { return date; }
@@ -39,7 +40,7 @@ class DayDream : public Dream
 {
 public:
     DayDream(string d, int b, int w, int dur);
-    void print() override;
+    QString toQString() const override;
 };
 
 

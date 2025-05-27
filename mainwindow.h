@@ -23,8 +23,8 @@ public:
 private slots:
     void GoToFoodForm();
     void GoToMessage();
+    void GoToDream();
 
-    void on_pushButton_6_clicked();
 
 private:
     Ui::MainWindow *ui;

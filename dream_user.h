@@ -6,6 +6,7 @@
 #define USER_H
 
 #include <string>
+#include <vector>
 #include "DREAM.h"
 #include "BIOS.h"
 using namespace std;
@@ -25,6 +26,7 @@ public:
     void removeDream(const string& date);
     void printAllDreams();
     int getAssesment(int days);
+    vector<Dream> getDreamsForLastDays(int days);
 
     string getUsername() const { return username; }
     int getUserId() const { return userId; }

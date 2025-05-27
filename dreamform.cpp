@@ -6,8 +6,13 @@
 dreamform::dreamform(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::dreamform)
+    ,user("TestUser", 8701, "sleep.txt")
 {
     ui->setupUi(this);
+
+    ui->lineEdit_date->setPlaceholderText("Введіть дату (dd/mm/yyyy)");
+    ui->lineEdit_bedtime->setPlaceholderText("Введіть час засинання (hh:mm)");
+    ui->lineEdit_wakeuptime->setPlaceholderText("Введіть час пробудження (hh:mm)");
 }
 
 dreamform::~dreamform()
@@ -35,7 +40,6 @@ void dreamform::on_AddDream_clicked()
     int bedtime_minutes = convertTimeToMinutes(bedtimeStr);
     int wakeup_minutes = convertTimeToMinutes(wakeStr);
 
-    User user("TestUser", 8701, "sleep.txt");
 
     user.addDream(date, bedtime_minutes, wakeup_minutes);
 
@@ -45,5 +49,29 @@ void dreamform::on_AddDream_clicked()
                         .arg(wakeup_minutes);
 
     ui->textEdit->append(entry);
+}
+
+
+void dreamform::on_UpdateButton_clicked()
+{
+
+    // зробити вивід всіх снів з файлу
+    ui->textEdit->clear();
+
+    // Отримати всі сни (наприклад, за 10000 днів — умовно "всі")
+    vector<Dream> dreams = user.getDreamsForLastDays(10000);
+
+    for (const auto& dream : dreams)
+    {
+        QString entry = dream.toQString();
+        ui->textEdit->append(entry);
+    }
+
+}
+
+
+void dreamform::on_BackButton_clicked()
+{
+    this->close();
 }
 

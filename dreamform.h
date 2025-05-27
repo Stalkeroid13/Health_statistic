@@ -16,11 +16,17 @@ public:
     explicit dreamform(QWidget *parent = nullptr);
     ~dreamform();
 
+
+
 private slots:
        void on_AddDream_clicked();
+       void on_UpdateButton_clicked();
+       void on_BackButton_clicked();
 
-private:
-    Ui::dreamform *ui;
+   private:
+        Ui::dreamform *ui;
+
+        User user;
 };
 
 #endif // DREAMFORM_H

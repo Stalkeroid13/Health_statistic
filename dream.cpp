@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <math.h>
 
+
 using namespace std;
 
 
@@ -34,24 +35,30 @@ DayDream::DayDream(string d, int b, int w, int dur)
 {
 }
 
-void Dream::print()
+QString Dream::toQString() const
 {
-    cout << "Date: " << date << endl;
-    cout << "Bedtime: " << bedtime << " minutes" << endl;
-    cout << "Wake-up time: " << wake_uptime << " minutes" << endl;
-    cout << "Duration: " << duration << " minutes" << endl;
-    cout << "Type: Night dream" << endl;
+    QString result;
+    result += "Дата: " + QString::fromStdString(date) + "\n";
+    result += "Час засинання: " + QString::number(bedtime) + " хв\n";
+    result += "Час пробудження: " + QString::number(wake_uptime) + " хв\n";
+    result += "Тривалість: " + QString::number(duration) + " хв\n";
+    result += "Тип: Нічний сон\n";
+    result += "----------------------------\n";
+    return result;
 }
 
-
-void DayDream::print()
+QString DayDream::toQString() const
 {
-    cout << "Date: " << date << endl;
-    cout << "Bedtime: " << bedtime << " minutes" << endl;
-    cout << "Wake-up time: " << wake_uptime << " minutes" << endl;
-    cout << "Duration: " << duration << " minutes" << endl;
-    cout << "Type: Day dream" << endl;
+    QString result;
+    result += "Дата: " + QString::fromStdString(date) + "\n";
+    result += "Час засинання: " + QString::number(bedtime) + " хв\n";
+    result += "Час пробудження: " + QString::number(wake_uptime) + " хв\n";
+    result += "Тривалість: " + QString::number(duration) + " хв\n";
+    result += "Тип: Денний сон\n";
+    result += "----------------------------\n";
+    return result;
 }
+
 
 void Dream::countDuration()
 {

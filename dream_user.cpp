@@ -43,3 +43,8 @@ int User::getAssesment(int days)
 {
     return dreamManager.sleepAssessment(days);
 }
+
+vector<Dream> User::getDreamsForLastDays(int days)
+{
+    return dreamManager.getDreamsForLastDays(days);
+}
