@@ -62,14 +62,14 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>60</x>
      <y>120</y>
-     <width>251</width>
+     <width>291</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
-    <string>Богдан Вікторович, поставте 100, буль ласка</string>
+    <string>Богдане Вікторовичу, поставте 100, будь ласка</string>
    </property>
   </widget>
  </widget>

@@ -31,46 +31,46 @@
     <rect>
      <x>100</x>
      <y>100</y>
-     <width>191</width>
+     <width>231</width>
      <height>26</height>
     </rect>
    </property>
    <property name="text">
-    <string>Введіть дату (dd/mm/yyyy)</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_bedtime">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>390</x>
      <y>100</y>
-     <width>281</width>
+     <width>231</width>
      <height>26</height>
     </rect>
    </property>
    <property name="text">
-    <string>Введіть час засинання (hh:mm)</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_wakeuptime">
    <property name="geometry">
     <rect>
-     <x>660</x>
+     <x>670</x>
      <y>100</y>
-     <width>271</width>
+     <width>231</width>
      <height>26</height>
     </rect>
    </property>
    <property name="text">
-    <string>Введіть час пробудження (hh:mm)</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="AddDream">
    <property name="geometry">
     <rect>
-     <x>980</x>
+     <x>952</x>
      <y>100</y>
-     <width>93</width>
+     <width>121</width>
      <height>29</height>
     </rect>
    </property>
@@ -91,7 +91,7 @@
     <string>Журнал сну</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="UpdateButton">
    <property name="geometry">
     <rect>
      <x>100</x>
@@ -104,12 +104,12 @@
     <string>Оновити</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="GenereteButton">
    <property name="geometry">
     <rect>
      <x>100</x>
      <y>500</y>
-     <width>251</width>
+     <width>151</width>
      <height>29</height>
     </rect>
    </property>
@@ -125,6 +125,32 @@
      <width>971</width>
      <height>261</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="BackButton">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>550</y>
+     <width>151</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Назад</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>500</y>
+     <width>63</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Оцінка</string>
    </property>
   </widget>
  </widget>

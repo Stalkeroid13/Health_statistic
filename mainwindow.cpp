@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     connect(ui->pushButton_4, &QPushButton::clicked, this, &MainWindow::GoToMessage);
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::GoToFoodForm);
-    connect(ui->pushButton_6, &QPushButton::clicked, this, &MainWindow::on_pushButton_6_clicked);
+    connect(ui->pushButton_6, &QPushButton::clicked, this, &MainWindow::GoToDream);
 }
 
 MainWindow::~MainWindow()
@@ -32,6 +32,7 @@ void MainWindow::GoToMessage()
 }
 
 void MainWindow::on_pushButton_6_clicked()
+void MainWindow::GoToDream()
 {
     dreamForm = new dreamform(this);
     dreamForm->show();
