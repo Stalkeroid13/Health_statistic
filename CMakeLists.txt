@@ -43,6 +43,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         messegefromdevs.h messegefromdevs.cpp messegefromdevs.ui
         dreamform.h dreamform.cpp dreamform.ui
 
+        mainwindow.h mainwindow.cpp mainwindow.ui
+        workoutwindow.h workoutwindow.cpp workoutwindow.ui
+
 
 
     )

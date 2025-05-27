@@ -31,10 +31,15 @@ void MainWindow::GoToMessage()
     message->show();
 }
 
-
 void MainWindow::on_pushButton_6_clicked()
 {
     dreamForm = new dreamform(this);
     dreamForm->show();
 }
 
+void MainWindow::on_pushButton_5_clicked()
+{
+    auto *window = new WorkoutWindow(this);
+    window->setAttribute(Qt::WA_DeleteOnClose);
+    window->show();
+}
