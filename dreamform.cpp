@@ -10,8 +10,14 @@ dreamform::dreamform(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QPixmap pixmap(":/new/prefix1/sobachka.png");
+    QPixmap pixmap(":/images/sobachka.png");
     ui->label_sobachka->setPixmap(pixmap);
+
+    if (pixmap.isNull()) {
+        qDebug() << "Не вдалося завантажити зображення";
+    } else {
+        qDebug() << "Зображення завантажено успішно";
+    }
 
 
 
