@@ -26,6 +26,7 @@ private slots:
     void toChangeForm();
     void addNoteToDiary();
     void generateTotalScore();
+    void closeWindow();
 
 private:
     Ui::foodform *ui;

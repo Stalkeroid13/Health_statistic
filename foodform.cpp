@@ -17,8 +17,10 @@ foodform::foodform(QWidget *parent)
     connect(ui->pushButton_7, &QPushButton::clicked, this, &foodform::updateDiary);
     connect(ui->pushButton_6, &QPushButton::clicked, this, &foodform::addNoteToDiary);
     connect(ui->pushButton, &QPushButton::clicked, this, &foodform::generateTotalScore);
+    connect(ui->pushButton_3, &QPushButton::clicked, this, &foodform::closeWindow);
     updateDiary();
     updateList();
+    ui->label_4->setText(" ");
 }
 
 foodform::~foodform()
@@ -34,19 +36,26 @@ void foodform::toChangeForm()
     foodChangeInfoWindow->show();
 }
 
+void foodform::closeWindow()
+{
+    this->close();
+}
+
 void foodform::generateTotalScore()
 {
     //зчитуємо усю необхідну інформацію
     QString startTime = ui->lineEdit_7->text();
     QString endTime = ui->lineEdit_8->text();
+    int strategy = ui->spinBox->value();
 
-    float score=100;
-    //food_list_object.GetStatistics();
+    // викликаємо функцію визначення оцінки
+    int sex=1, weight=50, high=168, age=19;
+    float score=food_list_object.GetStatistics(sex, weight, high, age, startTime.toStdString(), endTime.toStdString(), strategy);
     ui->label_5->setText(QString::number(score,'f', 2));
 
     //очищуємо поля вводу
-    ui->lineEdit_7->clear();
-    ui->lineEdit_8->clear();
+    //ui->lineEdit_7->clear();
+    //ui->lineEdit_8->clear();
 }
 
 void foodform::addNoteToList()
@@ -80,8 +89,15 @@ void foodform::addNoteToDiary()
 
     QString  fullQ = foodName + " " + foodWeight;
 
-    food_list_object.nutrition_diary_.AddNoteAboutFood(timeQ.toStdString(), fullQ.toStdString());
-    updateDiary();
+    if (food_list_object.nutrition_diary_.list_.Read(foodName.toStdString())=="Not found")
+    {
+        ui->label_4->setText("Cant be added because not found in product list");
+    }
+    else
+    {
+        food_list_object.nutrition_diary_.AddNoteAboutFood(timeQ.toStdString(), fullQ.toStdString());
+        //updateDiary();
+    }
 
     //очищуємо поля вводу
     ui->lineEdit_10->clear();

@@ -8,19 +8,19 @@ class GainWeight : public FoodStatistics
 {
 public:
     float Proficit();
-    virtual float GetStatistics(int sex, int weight, int high, int age, int activity_score, string starTime, string endTime);
+    virtual float GetStatistics(int sex, int weight, int high, int age, string starTime, string endTime);
 };
 
 class LoseWeight : public FoodStatistics
 {
 public:
     float Deficit();
-    virtual float GetStatistics(int sex, int weight, int high, int age, int activity_score, string starTime, string endTime);
+    virtual float GetStatistics(int sex, int weight, int high, int age, string starTime, string endTime);
 };
 
 class MaintainWeight : public FoodStatistics
 {
 public:
-    virtual float GetStatistics(int sex, int weight, int high, int age, int activity_score, string starTime, string endTime);
+    virtual float GetStatistics(int sex, int weight, int high, int age, string starTime, string endTime);
 };
 #endif //NUTRITIONSTRATEGIES_H

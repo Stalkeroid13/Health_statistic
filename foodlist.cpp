@@ -110,6 +110,7 @@ string FoodList::Read(string nameOfProduct)
     {
         return catalogue_.find(nameOfProduct)->second;
     }
+    return "Not found";
 }
 
 void FoodList::Remove(string objectName)
