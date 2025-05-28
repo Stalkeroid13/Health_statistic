@@ -27,6 +27,7 @@ private slots:
         Ui::dreamform *ui;
 
         User user;
+        bool isDataLoaded = false;
 };
 
 #endif // DREAMFORM_H

@@ -10,6 +10,10 @@ dreamform::dreamform(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->tableWidget->setColumnCount(5);
+    QStringList headers = {"Дата", "Час засинання", "Час пробудження", "Тривалість", "Тип сну"};
+    ui->tableWidget->setHorizontalHeaderLabels(headers);
+
     ui->lineEdit_date->setPlaceholderText("Введіть дату (dd/mm/yyyy)");
     ui->lineEdit_bedtime->setPlaceholderText("Введіть час засинання (hh:mm)");
     ui->lineEdit_wakeuptime->setPlaceholderText("Введіть час пробудження (hh:mm)");
@@ -43,27 +47,32 @@ void dreamform::on_AddDream_clicked()
 
     user.addDream(date, bedtime_minutes, wakeup_minutes);
 
-    QString entry = QString("Користувач: TestUser\nДата: %1\nЗасинання: %2 хв\nПробудження: %3 хв\n")
-                        .arg(dateStr)
-                        .arg(bedtime_minutes)
-                        .arg(wakeup_minutes);
 
-    ui->textEdit->append(entry);
 }
 
 
 void dreamform::on_UpdateButton_clicked()
 {
-    ui->textEdit->clear();
+    ui->tableWidget->setRowCount(0);
 
-    user.loadDreams("Sleep.txt");
+    if (!isDataLoaded)
+    {
+        user.loadDreams("Sleep.txt");
+        isDataLoaded = true;
+    }
 
     vector<Dream> dreams = user.getDreamsForLastDays(10000);
 
-    for (const auto& dream : dreams)
+    for (const Dream& dream : dreams)
     {
-        QString entry = dream.toQString();
-        ui->textEdit->append(entry);
+        int row = ui->tableWidget->rowCount();
+        ui->tableWidget->insertRow(row);
+
+        ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(dream.getDate())));
+        ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QString::number(dream.getBedtime()) + " хв"));
+        ui->tableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(dream.getWakeUptime()) + " хв"));
+        ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString::number(dream.getDuration()) + " хв"));
+        ui->tableWidget->setItem(row, 4, new QTableWidgetItem(dream.getSleepType() ? "Нічний" : "Денний"));
     }
 
 }
