@@ -26,6 +26,7 @@ public:
     void printAllDreams();
     int getAssesment(int days);
     vector<Dream> getDreamsForLastDays(int days);
+    vector<Dream> getAllDreamsForLastDays(int days);
 
     string getUsername() const { return username; }
     int getUserId() const { return userId; }

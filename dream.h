@@ -53,6 +53,8 @@ private:
     DayDream deserializeDayDream(const string& date, const string& data);
 
 public:
+    vector<Dream> getAllDreamsForLastDays(int days);
+    Dream* deserializeAnyDream(const string& date, const string& data);
     Dream createDream(string date, int bedtime, int wake_uptime);
     void loadDreams(string fileName);
     void addDream(const Dream& dream);

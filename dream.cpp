@@ -177,6 +177,7 @@ void DreamManager::addDream(const Dream& dream)
 {
     string serialized = serializeDream(dream);
     bios_.AddEntry(dream.getDate(), serialized);
+    bios_.WriteDataToFile("Sleep.txt");
 }
 
 // Видалити всі сни за певну дату
@@ -275,7 +276,7 @@ vector<Dream> DreamManager::getDreamsForLastDays(int days)
 
         Dream dream = deserializeDream(entry.first, entry.second);
 
-        if (!dream.getDate().empty() && dream.getSleepType())
+        if (!dream.getDate().empty())
         {
             dreams.push_back(dream);
         }
@@ -386,3 +387,50 @@ int DreamManager::sleepAssessment(int days)
 
     return score;
 }
+
+
+Dream* DreamManager::deserializeAnyDream(const string& date, const string& data)
+{
+    stringstream ss(data);
+    int bedtime, wake_uptime, duration, isNight;
+    ss >> bedtime >> wake_uptime >> duration >> isNight;
+
+    if (isNight == 0)
+        return new DayDream(date, bedtime, wake_uptime, duration);
+    else
+        return new Dream(date, bedtime, wake_uptime, duration, true);
+}
+
+
+
+vector<Dream> DreamManager::getAllDreamsForLastDays(int days)
+{
+    vector<Dream> result;
+
+    string latest_date = bios_.findLatestDate();
+    if (latest_date.empty()) return result;
+
+    string latest_iso = convertDateToISO(latest_date);
+    string start_iso = calculateStartDateAsString(latest_date, days);
+
+    for (const auto& entry : bios_.general_map_)
+    {
+        string iso = convertDateToISO(entry.first);
+        if (iso.empty()) continue;
+        if (iso <= start_iso || iso > latest_iso) continue;
+
+        Dream* d = deserializeAnyDream(entry.first, entry.second);
+        if (d && !d->getDate().empty()) {
+            result.push_back(*d);  // Копіюємо об'єкт за значенням
+            delete d;              // Звільняємо пам'ять
+        }
+    }
+
+    sort(result.begin(), result.end(), [](const Dream& a, const Dream& b) {
+        return a.getDate() < b.getDate();
+    });
+
+    return result;
+}
+
+
