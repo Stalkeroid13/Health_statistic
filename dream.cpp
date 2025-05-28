@@ -158,6 +158,21 @@ DayDream DreamManager::deserializeDayDream(const string& date, const string& dat
 }
 
 
+void DreamManager::loadDreams(string fileName)
+{
+    if (!bios_.LoadDataFromFile(fileName))
+    {
+        cerr << "Error: Failed to load data from file: " << fileName << endl;
+    }
+    else
+    {
+        cout << "Data successfully loaded from file: " << fileName << endl;
+    }
+}
+
+
+
+
 void DreamManager::addDream(const Dream& dream)
 {
     string serialized = serializeDream(dream);
@@ -328,7 +343,6 @@ int DreamManager::regularity(int days)
     const double tolerance = 30.0; // Поріг у хвилинах
     return std_deviation <= tolerance ? 1 : 0;
 }
-
 
 int DreamManager::sleepAssessment(int days)
 {

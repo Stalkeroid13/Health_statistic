@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 #include "DREAM.h"
-#include "BIOS.h"
 using namespace std;
 
 class User
@@ -17,11 +16,11 @@ private:
     string username;
     int userId;
     DreamManager dreamManager;
-   // BIOS bios;
 
 public:
     User(string name, int id, const string& fileName);
 
+    void loadDreams(string fileName);
     void addDream(const string& date, int bedtime, int wake_uptime);
     void removeDream(const string& date);
     void printAllDreams();

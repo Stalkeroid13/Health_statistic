@@ -54,6 +54,7 @@ private:
 
 public:
     Dream createDream(string date, int bedtime, int wake_uptime);
+    void loadDreams(string fileName);
     void addDream(const Dream& dream);
     void removeDream(const string& date);
     void printAllDreams();

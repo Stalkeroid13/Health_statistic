@@ -6,7 +6,7 @@
 dreamform::dreamform(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::dreamform)
-    ,user("TestUser", 8701, "sleep.txt")
+    ,user("TestUser", 8701, "Sleep.txt")
 {
     ui->setupUi(this);
 
@@ -54,11 +54,10 @@ void dreamform::on_AddDream_clicked()
 
 void dreamform::on_UpdateButton_clicked()
 {
-
-    // зробити вивід всіх снів з файлу
     ui->textEdit->clear();
 
-    // Отримати всі сни (наприклад, за 10000 днів — умовно "всі")
+    user.loadDreams("Sleep.txt");
+
     vector<Dream> dreams = user.getDreamsForLastDays(10000);
 
     for (const auto& dream : dreams)

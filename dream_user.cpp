@@ -8,15 +8,14 @@
 
 User::User(string name, int id, const string& fileName) : username(name), userId(id)
 {
-    // if (!bios.LoadDataFromFile(fileName))
-    // {
-    //     cerr << "Error: Failed to load data from file: " << fileName << endl;
-    // }
-    // else
-    // {
-    //     cout << "Data successfully loaded from file: " << fileName << endl;
-    // }
+
 }
+
+void User::loadDreams(string fileName)
+{
+    return dreamManager.loadDreams(fileName);
+}
+
 
 void User::addDream(const string& date, int bedtime, int wake_uptime)
 {
