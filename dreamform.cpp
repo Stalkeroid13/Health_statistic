@@ -10,6 +10,11 @@ dreamform::dreamform(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QPixmap pixmap(":/new/prefix1/sobachka.png");
+    ui->label_sobachka->setPixmap(pixmap);
+
+
+
     ui->tableWidget->setColumnCount(5);
     QStringList headers = {"Дата", "Час засинання", "Час пробудження", "Тривалість", "Тип сну"};
     ui->tableWidget->setHorizontalHeaderLabels(headers);

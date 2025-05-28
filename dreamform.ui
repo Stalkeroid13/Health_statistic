@@ -170,7 +170,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="label_sobachka">
    <property name="geometry">
     <rect>
      <x>740</x>
