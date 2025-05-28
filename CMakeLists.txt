@@ -23,9 +23,12 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_resources(RES_FILES recourses.qrc)
+
     qt_add_executable(Health_statistic
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        ${RES_FILES}
         bios.h bios.cpp
         exercise.h exercise.cpp
         workout.h workout.cpp
@@ -45,7 +48,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         mainwindow.h mainwindow.cpp mainwindow.ui
         workoutwindow.h workoutwindow.cpp workoutwindow.ui
-        recourses.qrc
+
 
 
 
