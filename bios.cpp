@@ -45,20 +45,42 @@ bool BIOS::LoadDataFromFile(const string& file_name)
 
 bool BIOS::WriteDataToFile(const string& file_name)
 {
-    // Спроба відкрити файл у режимі перезапису
-    ofstream file_out(file_name, ios::trunc);
+    // Крок 1: Зчитати існуючі дані з файлу у набір (set)
+    set<string> existingEntries;
+    ifstream file_in(file_name);
+
+    if (file_in.is_open())
+    {
+        string line;
+        while (getline(file_in, line))
+        {
+            existingEntries.insert(line); // Додаємо рядок до набору
+        }
+        file_in.close();
+    }
+
+    // Крок 2: Відкрити файл у режимі "додати до кінця"
+    //змінила режим на перезаписування, бо при бажанні редагування записів
+    //з попередніх запусків програми змін не буде
+    ofstream file_out(file_name, ios::trunc);//app);
 
     if (!file_out.is_open())
     {
-        cerr << "Failed to open the file for writing: " << file_name << endl;
-        perror("System error");  // Пояснення системної помилки (наприклад, "Permission denied")
+        cerr << "Failed to open the file for writing!" << endl;
         return false;
     }
 
-    // Запис усіх записів із хеш-таблиці у файл
+    // Крок 3: Перебрати дані з хеш-таблиці
     for (const auto& entry : general_map_)
     {
-        file_out << entry.first << " " << entry.second << endl;
+        string line = entry.first + " " + entry.second; // Формуємо рядок: "дата об'єкти"
+
+        // Якщо такого запису ще немає у файлі, записуємо його
+        // при перезаписі у файл необхідно записувати всі дані
+        //if (existingEntries.find(line) == existingEntries.end())
+        //{
+            file_out << line << endl;
+        //}
     }
 
     file_out.close();

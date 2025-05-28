@@ -38,16 +38,6 @@ int convertTimeToMinutes(const QString& timeStr)
 }
 
 
-QString minutesToHHMM(int totalMinutes)
-{
-    int hours = totalMinutes / 60;
-    int minutes = totalMinutes % 60;
-    return QString("%1:%2")
-        .arg(hours, 2, 10, QLatin1Char('0'))
-        .arg(minutes, 2, 10, QLatin1Char('0'));
-}
-
-
 
 void dreamform::on_AddDream_clicked()
 {
@@ -76,7 +66,7 @@ void dreamform::on_UpdateButton_clicked()
         isDataLoaded = true;
     }
 
-    vector<Dream> dreams = user.getAllDreamsForLastDays(10000);
+    vector<Dream> dreams = user.getDreamsForLastDays(10000);
 
     for (const Dream& dream : dreams)
     {
@@ -84,12 +74,11 @@ void dreamform::on_UpdateButton_clicked()
         ui->tableWidget->insertRow(row);
 
         ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(dream.getDate())));
-        ui->tableWidget->setItem(row, 1, new QTableWidgetItem(minutesToHHMM(dream.getBedtime())));
-        ui->tableWidget->setItem(row, 2, new QTableWidgetItem(minutesToHHMM(dream.getWakeUptime())));
-        ui->tableWidget->setItem(row, 3, new QTableWidgetItem(minutesToHHMM(dream.getDuration())));
+        ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QString::number(dream.getBedtime()) + " хв"));
+        ui->tableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(dream.getWakeUptime()) + " хв"));
+        ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString::number(dream.getDuration()) + " хв"));
         ui->tableWidget->setItem(row, 4, new QTableWidgetItem(dream.getSleepType() ? "Нічний" : "Денний"));
     }
-
 
 }
 
