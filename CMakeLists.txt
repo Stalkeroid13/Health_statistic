@@ -45,6 +45,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         mainwindow.h mainwindow.cpp mainwindow.ui
         workoutwindow.h workoutwindow.cpp workoutwindow.ui
+        recourses.qrc
 
 
 

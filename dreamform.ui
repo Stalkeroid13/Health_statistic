@@ -183,13 +183,15 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>C:/Users/Admin/Desktop/sobachka.png</pixmap>
+    <pixmap resource="recourses.qrc">:/new/prefix1/sobachka.png</pixmap>
    </property>
    <property name="scaledContents">
     <bool>true</bool>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="recourses.qrc"/>
+ </resources>
  <connections/>
 </ui>
