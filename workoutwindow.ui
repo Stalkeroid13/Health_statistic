@@ -7,29 +7,35 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>328</height>
+    <height>415</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Фізична активність</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTableWidget" name="table">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
+      <y>10</y>
       <width>781</width>
-      <height>192</height>
+      <height>291</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>781</width>
+      <height>16777215</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="addButton">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>0</y>
-      <width>251</width>
+      <x>330</x>
+      <y>340</y>
+      <width>161</width>
       <height>25</height>
      </rect>
     </property>
@@ -37,11 +43,11 @@
      <string>Додати запис</string>
     </property>
    </widget>
-   <widget class="QDateEdit" name="dateEdit">
+   <widget class="QDateEdit" name="dateEdit_from">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>0</y>
+      <y>340</y>
       <width>121</width>
       <height>26</height>
      </rect>
@@ -60,14 +66,63 @@
    <widget class="QPushButton" name="saveButton">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>0</y>
+      <x>330</x>
+      <y>310</y>
       <width>161</width>
       <height>25</height>
      </rect>
     </property>
     <property name="text">
      <string>Зберегти</string>
+    </property>
+   </widget>
+   <widget class="QDateEdit" name="dateEdit_to">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>340</y>
+      <width>121</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="dateTime">
+     <datetime>
+      <hour>23</hour>
+      <minute>0</minute>
+      <second>0</second>
+      <year>2025</year>
+      <month>5</month>
+      <day>27</day>
+     </datetime>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_range">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>310</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Кінцева дата</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>310</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Початкова дата</string>
     </property>
    </widget>
   </widget>

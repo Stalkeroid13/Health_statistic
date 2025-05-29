@@ -16,7 +16,11 @@ WorkoutWindow::WorkoutWindow(QWidget *parent)
 
     connect(ui->saveButton, &QPushButton::clicked, this, &WorkoutWindow::saveExercises);
 
-    connect(ui->dateEdit, &QDateEdit::dateChanged, this, [this](const QDate &newDate) {
+    connect(ui->checkBox_range, &QCheckBox::toggled, this, [this](bool checked) {
+        ui->dateEdit_to->setEnabled(checked);
+    });
+
+    connect(ui->dateEdit_from, &QDateEdit::dateChanged, this, [this](const QDate &newDate) {
         saveExercises();
         loadExercises();
     });
@@ -29,7 +33,7 @@ WorkoutWindow::WorkoutWindow(QWidget *parent)
     connect(ui->addButton, &QPushButton::clicked, this, [=]() {
         int row = ui->table->rowCount();
         ui->table->insertRow(row);
-        ui->table->setItem(row, 0, new QTableWidgetItem(ui->dateEdit->date().toString("yyyy-MM-dd")));
+        ui->table->setItem(row, 0, new QTableWidgetItem(ui->dateEdit_from->date().toString("yyyy-MM-dd")));
     });
 
     loadExercises();
@@ -41,51 +45,66 @@ WorkoutWindow::~WorkoutWindow() {
 
 void WorkoutWindow::loadExercises()
 {
-    ui->table->setRowCount(0);
-    string date = ui->dateEdit->date().toString("yyyy-MM-dd").toStdString();
-
     bios.LoadDataFromFile(fileName);
-    auto entries = bios.GetValues(date);
+    ui->table->setRowCount(0);
 
-    for (const auto& entry : entries) {
-        istringstream ss(entry);
-        string name, muscle;
-        int reps, sets;
-        ss >> name >> muscle >> reps >> sets;
+    QDate startDate = ui->dateEdit_from->date();
+    QDate endDate = startDate;
 
-        int row = ui->table->rowCount();
-        ui->table->insertRow(row);
-        ui->table->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(date)));
-        ui->table->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(name)));
-        ui->table->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(muscle)));
-        ui->table->setItem(row, 3, new QTableWidgetItem(QString::number(reps)));
-        ui->table->setItem(row, 4, new QTableWidgetItem(QString::number(sets)));
+    if (ui->checkBox_range->isChecked())
+        endDate = ui->dateEdit_to->date();
+
+    QDate current = startDate;
+
+    while (current >= endDate)
+    {
+        string dateStr = current.toString("yyyy-MM-dd").toStdString();
+        auto entries = bios.GetValues(dateStr);
+
+        for (const auto& entry : entries)
+        {
+            istringstream ss(entry);
+            string name, muscle;
+            int reps, sets;
+            ss >> name >> muscle >> reps >> sets;
+
+            int row = ui->table->rowCount();
+            ui->table->insertRow(row);
+            ui->table->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(dateStr)));
+            ui->table->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(name)));
+            ui->table->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(muscle)));
+            ui->table->setItem(row, 3, new QTableWidgetItem(QString::number(reps)));
+            ui->table->setItem(row, 4, new QTableWidgetItem(QString::number(sets)));
+        }
+
+        current = current.addDays(-1);
     }
-
-    qDebug() << "Loaded entries for date:" << QString::fromStdString(date)
-             << ", count:" << entries.size();
 }
 
 void WorkoutWindow::saveExercises()
 {
     bios.LoadDataFromFile(fileName);
 
-    string date = ui->dateEdit->date().toString("yyyy-MM-dd").toStdString();
-    bios.RemoveEntry(date);
+    vector<string> alreadyClearedDates;
 
     for (int row = 0; row < ui->table->rowCount(); ++row) {
+        QTableWidgetItem* dateItem   = ui->table->item(row, 0);
         QTableWidgetItem* nameItem   = ui->table->item(row, 1);
         QTableWidgetItem* muscleItem = ui->table->item(row, 2);
         QTableWidgetItem* repsItem   = ui->table->item(row, 3);
         QTableWidgetItem* setsItem   = ui->table->item(row, 4);
 
-        if (!nameItem || !muscleItem || !repsItem || !setsItem ||
-            nameItem->text().isEmpty() ||
-            muscleItem->text().isEmpty() ||
-            repsItem->text().isEmpty() ||
-            setsItem->text().isEmpty()) {
-            qDebug() << "Пропускаємо незаповнений рядок:" << row;
-            continue;
+        if (!dateItem || !nameItem || !muscleItem || !repsItem || !setsItem) continue;
+        if (dateItem->text().isEmpty() || nameItem->text().isEmpty() ||
+            muscleItem->text().isEmpty() || repsItem->text().isEmpty() ||
+            setsItem->text().isEmpty()) continue;
+
+        string date   = dateItem->text().toStdString();
+
+        // Якщо дату ще не очищали — видаляємо старі записи
+        if (std::find(alreadyClearedDates.begin(), alreadyClearedDates.end(), date) == alreadyClearedDates.end()) {
+            bios.RemoveEntry(date);
+            alreadyClearedDates.push_back(date);
         }
 
         string name   = nameItem->text().toStdString();
@@ -100,7 +119,6 @@ void WorkoutWindow::saveExercises()
 
     bios.WriteDataToFile(fileName);
 }
-
 
 void WorkoutWindow::closeEvent(QCloseEvent *event)
 {

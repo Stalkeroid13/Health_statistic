@@ -9,6 +9,7 @@ using namespace std;
 
 bool BIOS::LoadDataFromFile(const string& file_name)
 {
+    general_map_.clear();
     ifstream file(file_name);
 
     if (!file.is_open())
