@@ -18,9 +18,15 @@ WorkoutWindow::WorkoutWindow(QWidget *parent)
 
     connect(ui->checkBox_range, &QCheckBox::toggled, this, [this](bool checked) {
         ui->dateEdit_to->setEnabled(checked);
+        loadExercises();
     });
 
     connect(ui->dateEdit_from, &QDateEdit::dateChanged, this, [this](const QDate &newDate) {
+        saveExercises();
+        loadExercises();
+    });
+
+    connect(ui->dateEdit_to, &QDateEdit::dateChanged, this, [this](const QDate &newDate) {
         saveExercises();
         loadExercises();
     });
