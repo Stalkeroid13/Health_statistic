@@ -76,7 +76,6 @@ vector<float> FoodStatistics::OneDayAnalysis(string time)
     for(size_t i = 0; i < one_day_data.size(); i++)
     {
         //витягуємо назву та масу
-        //qDebug() << "one_day_data[i] " << one_day_data[i];
         int weight;
         string nameOfProduct, temp;
         istringstream iss(one_day_data[i]);
@@ -89,7 +88,6 @@ vector<float> FoodStatistics::OneDayAnalysis(string time)
         result[2]+=one_meal.fats;
         result[3]+=one_meal.carbohydrates;
     }
-    //qDebug() << "кількість калорій: " << result[0];
     return result;
 }
 
@@ -109,11 +107,6 @@ float FoodStatistics::GetStatistics(int sex, int weight, int high, int age, stri
     float norm_proteins = 0.35*norm_calories;
     float norm_fats = 0.20*norm_calories;
     float norm_carbohydrates = 0.45*norm_calories;
-
-    /*qDebug() << "кількість калорій: " << norm_calories;
-    qDebug() << "norm_proteins " << norm_proteins;
-    qDebug() << "norm_fats " << norm_fats;
-    qDebug() << "norm_carbohydrates " << norm_carbohydrates;*/
 
     //обраховуємо кількості спожитих речовин за час
     int numberOfDays=0;
@@ -143,11 +136,6 @@ float FoodStatistics::GetStatistics(int sex, int weight, int high, int age, stri
         carbohydrates_score = temp[3]/norm_carbohydrates;
     else
         carbohydrates_score = 2 - temp[3]/norm_carbohydrates;
-
-    /*qDebug() << "calories_score " << calories_score;
-    qDebug() << "proteins_score " << proteins_score;
-    qDebug() << "fats_score " << fats_score;
-    qDebug() << "carbohydrates_score " << carbohydrates_score;*/
 
     //загальна оцінка - середнє арифметичне, поділене на кількість днів у відсотках
     return (calories_score+proteins_score+fats_score+carbohydrates_score)*100/4/numberOfDays;
