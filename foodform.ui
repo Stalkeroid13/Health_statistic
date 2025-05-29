@@ -629,7 +629,7 @@ QHeaderView::section {
       <item row="0" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Каталог</string>
+         <string>Каталог страв і продуктів</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -639,7 +639,7 @@ QHeaderView::section {
       <item row="0" column="1">
        <widget class="QLabel" name="label_7">
         <property name="text">
-         <string>      </string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -651,6 +651,25 @@ QHeaderView::section {
        </widget>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>Щоб отримати оцінку харчування, введіть початковий та кінцевий час, а також оберіть номер стратегії:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_9">
+      <property name="font">
+       <font>
+        <pointsize>7</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>(1 - схуднення, 2 - підтримка ваги, 3 - набір ваги) (0-мінімум, 100 - максимум)</string>
+      </property>
+     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -668,6 +687,16 @@ QHeaderView::section {
         </property>
         <property name="placeholderText">
          <string>Введіть кінцевий час</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spinBox">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>3</number>
         </property>
        </widget>
       </item>

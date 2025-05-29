@@ -47,3 +47,8 @@ vector<Dream> User::getDreamsForLastDays(int days)
 {
     return dreamManager.getDreamsForLastDays(days);
 }
+
+vector<Dream> User::getAllDreamsForLastDays(int days)
+{
+    return dreamManager.getAllDreamsForLastDays(days);
+}

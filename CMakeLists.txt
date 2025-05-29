@@ -35,7 +35,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         workout.h workout.cpp
         foodlist.h foodlist.cpp
         foodstatistics.h foodstatistics.cpp
-        nutritionstrategieas.h nutritionstrategieas.cpp
+
         foodform.h foodform.cpp foodform.ui
         foodchangeinfo.h foodchangeinfo.cpp foodchangeinfo.ui
         exercisefactory.h exercisefactory.cpp

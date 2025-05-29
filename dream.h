@@ -59,6 +59,7 @@ public:
     void removeDream(const string& date);
     void printAllDreams();
     vector<Dream> getDreamsForLastDays(int days);
+    vector<Dream> getAllDreamsForLastDays(int days);
     int averageDuration(int days);
     int sleepAssessment(int days);
     int regularity(int days);

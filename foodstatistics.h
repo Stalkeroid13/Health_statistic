@@ -26,10 +26,10 @@ class FoodStatistics
 {
 public:
     Product NutritionValueOfMeal(int weight, string nameOfProduct);
-    vector<float> AnalysisOfNutritionAccordingToTime(string starTime, string endTime);//доробити
-    float NormOfCalories(int sex, int weight, int high, int age, int activity_score);
+    vector<float> AnalysisOfNutritionAccordingToTime(string starTime, string endTime, int &day_counter);//доробити
+    float NormOfCalories(int sex, int weight, int high, int age);
     vector<float> OneDayAnalysis(string time);
-    virtual float GetStatistics(int sex, int weight, int high, int age, int activity_score, string starTime, string endTime);
+    virtual float GetStatistics(int sex, int weight, int high, int age, string starTime, string endTime, int strategy);
 //private:
     DiaryManager nutrition_diary_;
 };

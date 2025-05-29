@@ -44,6 +44,15 @@ int convertTimeToMinutes(const QString& timeStr)
 }
 
 
+QString minutesToHHMM(int totalMinutes)
+{
+    int hours = totalMinutes / 60;
+    int minutes = totalMinutes % 60;
+    return QString("%1:%2")
+        .arg(hours, 2, 10, QLatin1Char('0'))
+        .arg(minutes, 2, 10, QLatin1Char('0'));
+}
+
 
 void dreamform::on_AddDream_clicked()
 {
@@ -72,7 +81,20 @@ void dreamform::on_UpdateButton_clicked()
         isDataLoaded = true;
     }
 
-    vector<Dream> dreams = user.getDreamsForLastDays(10000);
+    QString daysText = ui->lineEdit_days->text();
+    int days = 10000;
+
+    if (!daysText.isEmpty())
+    {
+        bool ok;
+        int entered = daysText.toInt(&ok);
+        if (ok && entered > 0)
+        {
+            days = entered;
+        }
+    }
+
+    vector<Dream> dreams = user.getAllDreamsForLastDays(days);
 
     for (const Dream& dream : dreams)
     {
@@ -80,17 +102,48 @@ void dreamform::on_UpdateButton_clicked()
         ui->tableWidget->insertRow(row);
 
         ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(dream.getDate())));
-        ui->tableWidget->setItem(row, 1, new QTableWidgetItem(QString::number(dream.getBedtime()) + " хв"));
-        ui->tableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(dream.getWakeUptime()) + " хв"));
-        ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString::number(dream.getDuration()) + " хв"));
+        ui->tableWidget->setItem(row, 1, new QTableWidgetItem(minutesToHHMM(dream.getBedtime())));
+        ui->tableWidget->setItem(row, 2, new QTableWidgetItem(minutesToHHMM(dream.getWakeUptime())));
+        ui->tableWidget->setItem(row, 3, new QTableWidgetItem(minutesToHHMM(dream.getDuration())));
         ui->tableWidget->setItem(row, 4, new QTableWidgetItem(dream.getSleepType() ? "Нічний" : "Денний"));
     }
-
 }
 
 
 void dreamform::on_BackButton_clicked()
 {
     this->close();
+}
+
+
+void dreamform::on_GenereteButton_clicked()
+{
+    if (!isDataLoaded)
+    {
+        user.loadDreams("Sleep.txt");
+        isDataLoaded = true;
+    }
+
+    QString daysText = ui->lineEdit_days->text();
+    int defaultDays = 30;  // Значення за замовчуванням
+    int days = defaultDays;
+
+    if (!daysText.isEmpty())
+    {
+        bool ok;
+        int entered = daysText.toInt(&ok);
+        if (ok && entered > 0)
+        {
+            days = entered;
+        }
+        else
+        {
+            ui->label_score->setText("Невірне значення днів");
+            return;
+        }
+    }
+
+    int score = user.getAssesment(days);
+    ui->label_score->setText("Оцінка: " + QString::number(score));
 }
 
