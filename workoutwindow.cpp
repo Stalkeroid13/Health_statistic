@@ -6,12 +6,20 @@
 #include <QHeaderView>
 #include <QTableWidgetItem>
 #include <sstream>
+#include <QDebug>
 
 WorkoutWindow::WorkoutWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::WorkoutWindow)
 {
     ui->setupUi(this);
+
+    connect(ui->saveButton, &QPushButton::clicked, this, &WorkoutWindow::saveExercises);
+
+    connect(ui->dateEdit, &QDateEdit::dateChanged, this, [this](const QDate &newDate) {
+        saveExercises();
+        loadExercises();
+    });
 
     ui->table->setColumnCount(5);
     ui->table->setHorizontalHeaderLabels({"Дата", "Вправа", "М'язи", "Повторення", "Підходи"});
@@ -31,9 +39,12 @@ WorkoutWindow::~WorkoutWindow() {
     delete ui;
 }
 
-void WorkoutWindow::loadExercises() {
+void WorkoutWindow::loadExercises()
+{
     ui->table->setRowCount(0);
     string date = ui->dateEdit->date().toString("yyyy-MM-dd").toStdString();
+
+    bios.LoadDataFromFile(fileName);
     auto entries = bios.GetValues(date);
 
     for (const auto& entry : entries) {
@@ -50,27 +61,53 @@ void WorkoutWindow::loadExercises() {
         ui->table->setItem(row, 3, new QTableWidgetItem(QString::number(reps)));
         ui->table->setItem(row, 4, new QTableWidgetItem(QString::number(sets)));
     }
+
+    qDebug() << "Loaded entries for date:" << QString::fromStdString(date)
+             << ", count:" << entries.size();
 }
 
-void WorkoutWindow::saveExercises() {
+void WorkoutWindow::saveExercises()
+{
+    bios.LoadDataFromFile(fileName);
+
     string date = ui->dateEdit->date().toString("yyyy-MM-dd").toStdString();
     bios.RemoveEntry(date);
 
     for (int row = 0; row < ui->table->rowCount(); ++row) {
-        string name = ui->table->item(row, 1)->text().toStdString();
-        string muscle = ui->table->item(row, 2)->text().toStdString();
-        int reps = ui->table->item(row, 3)->text().toInt();
-        int sets = ui->table->item(row, 4)->text().toInt();
+        QTableWidgetItem* nameItem   = ui->table->item(row, 1);
+        QTableWidgetItem* muscleItem = ui->table->item(row, 2);
+        QTableWidgetItem* repsItem   = ui->table->item(row, 3);
+        QTableWidgetItem* setsItem   = ui->table->item(row, 4);
+
+        if (!nameItem || !muscleItem || !repsItem || !setsItem ||
+            nameItem->text().isEmpty() ||
+            muscleItem->text().isEmpty() ||
+            repsItem->text().isEmpty() ||
+            setsItem->text().isEmpty()) {
+            qDebug() << "Пропускаємо незаповнений рядок:" << row;
+            continue;
+        }
+
+        string name   = nameItem->text().toStdString();
+        string muscle = muscleItem->text().toStdString();
+        int reps      = repsItem->text().toInt();
+        int sets      = setsItem->text().toInt();
 
         stringstream entry;
         entry << name << " " << muscle << " " << reps << " " << sets;
         bios.AddEntry(date, entry.str());
     }
 
-    bios.WriteDataToFile("Exercise.txt");
+    bios.WriteDataToFile(fileName);
 }
 
-void WorkoutWindow::closeEvent(QCloseEvent *event) {
+
+void WorkoutWindow::closeEvent(QCloseEvent *event)
+{
+    ui->table->setCurrentCell(-1, -1);
     saveExercises();
     QMainWindow::closeEvent(event);
 }
+
+
+

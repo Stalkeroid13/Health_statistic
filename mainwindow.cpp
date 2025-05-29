@@ -40,7 +40,7 @@ void MainWindow::GoToDream()
 
 void MainWindow::on_pushButton_5_clicked()
 {
-    auto *window = new WorkoutWindow(this);
-    window->setAttribute(Qt::WA_DeleteOnClose);
-    window->show();
+    workoutWindow = new WorkoutWindow(this);
+    workoutWindow->setAttribute(Qt::WA_DeleteOnClose);
+    workoutWindow->show();
 }

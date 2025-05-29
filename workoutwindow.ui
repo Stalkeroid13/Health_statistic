@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>328</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <widget class="QTableWidget" name="table">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>120</y>
-      <width>256</width>
+      <x>10</x>
+      <y>30</y>
+      <width>781</width>
       <height>192</height>
      </rect>
     </property>
@@ -27,24 +27,47 @@
    <widget class="QPushButton" name="addButton">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>350</y>
-      <width>80</width>
+      <x>540</x>
+      <y>0</y>
+      <width>251</width>
       <height>25</height>
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Додати запис</string>
     </property>
    </widget>
    <widget class="QDateEdit" name="dateEdit">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>50</y>
-      <width>110</width>
+      <x>10</x>
+      <y>0</y>
+      <width>121</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="dateTime">
+     <datetime>
+      <hour>23</hour>
+      <minute>0</minute>
+      <second>0</second>
+      <year>2025</year>
+      <month>5</month>
+      <day>28</day>
+     </datetime>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveButton">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>0</y>
+      <width>161</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Зберегти</string>
     </property>
    </widget>
   </widget>

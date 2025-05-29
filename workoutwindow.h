@@ -22,6 +22,7 @@ private:
     void loadExercises();
     void saveExercises();
 
+    string fileName = "Exercise.txt";
     Ui::WorkoutWindow *ui;
     BIOS bios;
 };
