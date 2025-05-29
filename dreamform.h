@@ -23,6 +23,8 @@ private slots:
        void on_UpdateButton_clicked();
        void on_BackButton_clicked();
 
+       void on_GenereteButton_clicked();
+
    private:
         Ui::dreamform *ui;
 
