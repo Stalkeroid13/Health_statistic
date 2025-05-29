@@ -72,7 +72,7 @@ void dreamform::on_UpdateButton_clicked()
         isDataLoaded = true;
     }
 
-    vector<Dream> dreams = user.getDreamsForLastDays(10000);
+    vector<Dream> dreams = user.getAllDreamsForLastDays(10000);
 
     for (const Dream& dream : dreams)
     {
@@ -92,5 +92,19 @@ void dreamform::on_UpdateButton_clicked()
 void dreamform::on_BackButton_clicked()
 {
     this->close();
+}
+
+
+void dreamform::on_GenereteButton_clicked()
+{
+    if (!isDataLoaded)
+    {
+        user.loadDreams("Sleep.txt");
+        isDataLoaded = true;
+    }
+
+    int score = user.getAssesment(30); // наприклад, за останні 30 днів
+
+    ui->label_score->setText("Оцінка: " + QString::number(score));
 }
 

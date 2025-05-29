@@ -136,7 +136,7 @@
     <string>Назад</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="label_score">
    <property name="geometry">
     <rect>
      <x>280</x>
