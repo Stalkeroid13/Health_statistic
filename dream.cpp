@@ -178,6 +178,7 @@ void DreamManager::addDream(const Dream& dream)
 {
     string serialized = serializeDream(dream);
     bios_.AddEntry(dream.getDate(), serialized);
+    bios_.WriteDataToFile("Sleep.txt");
 }
 
 // Видалити всі сни за певну дату
@@ -393,14 +394,16 @@ vector<Dream> DreamManager::getAllDreamsForLastDays(int days)
 {
     vector<Dream> dreams;
 
-    string latest_date = bios_.findLatestDate();
+    string latest_date = bios_.findLatestDate(); // у форматі dd/mm/yyyy
     if (latest_date.empty())
     {
         cerr << "No latest date found in BIOS." << endl;
         return dreams;
     }
 
-    string start_date = calculateStartDateAsString(latest_date, days);
+    // Перетворюємо обидві дати в ISO-формат
+    string latest_iso = convertDateToISO(latest_date);
+    string start_iso = calculateStartDateAsString(latest_date, days); // вже ISO
 
     for (const auto& entry : bios_.general_map_)
     {
@@ -411,11 +414,11 @@ vector<Dream> DreamManager::getAllDreamsForLastDays(int days)
             continue;
         }
 
-        if (entry_date_iso <= start_date || entry_date_iso > latest_date)
+        // Пропускаємо ті, що поза діапазоном
+        if (entry_date_iso < start_iso || entry_date_iso > latest_iso)
         {
             continue;
         }
-
 
         Dream dream = deserializeDream(entry.first, entry.second);
 
@@ -432,4 +435,3 @@ vector<Dream> DreamManager::getAllDreamsForLastDays(int days)
 
     return dreams;
 }
-
