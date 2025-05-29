@@ -89,7 +89,7 @@ vector<float> FoodStatistics::OneDayAnalysis(string time)
         result[2]+=one_meal.fats;
         result[3]+=one_meal.carbohydrates;
     }
-    qDebug() << "кількість калорій: " << result[0];
+    //qDebug() << "кількість калорій: " << result[0];
     return result;
 }
 
