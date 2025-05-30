@@ -7,8 +7,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->pushButton_4, &QPushButton::clicked, this, &MainWindow::GoToMessage);
-    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::GoToFoodForm);
+    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::GoToFood);
     connect(ui->pushButton_6, &QPushButton::clicked, this, &MainWindow::GoToDream);
+    connect(ui->pushButton_5, &QPushButton::clicked, this, &MainWindow::GoToSport);
 }
 
 MainWindow::~MainWindow()
@@ -16,11 +17,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-//перехід до категорії харчування
-void MainWindow::GoToFoodForm()
+
+void MainWindow::GoToFood()
 {
-    foodForm = new foodform(this);
-    //foodForm->setAttribute(Qt::WA_DeleteOnClose);
+    foodForm = new foodform(sex, height, weight, age, this);
     foodForm->show();
 }
 
@@ -38,7 +38,7 @@ void MainWindow::GoToDream()
     dreamForm->show();
 }
 
-void MainWindow::on_pushButton_5_clicked()
+void MainWindow::GoToSport()
 {
     workoutWindow = new WorkoutWindow(this);
     workoutWindow->setAttribute(Qt::WA_DeleteOnClose);

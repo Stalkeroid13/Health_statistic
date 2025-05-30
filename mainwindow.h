@@ -7,6 +7,7 @@
 #include "messegefromdevs.h"
 #include "workoutwindow.h"
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -22,11 +23,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void GoToFoodForm();
+    void GoToFood();
     void GoToMessage();
     void GoToDream();
-
-    void on_pushButton_5_clicked();
+    void GoToSport();
 
 private:
     Ui::MainWindow *ui;
@@ -34,5 +34,6 @@ private:
     MessegeFromDevs *message;
     dreamform *dreamForm;
     WorkoutWindow *workoutWindow;
+    int sex=2, height =190, age =145, weight = 52;
 };
 #endif // MAINWINDOW_H

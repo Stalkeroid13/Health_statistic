@@ -140,19 +140,6 @@
      <string>МЕНЮ</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>130</y>
-      <width>381</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Загальна характеристика</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
@@ -166,24 +153,11 @@
      <string>Категорії</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>160</y>
-      <width>381</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Профіль</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>190</y>
+      <y>290</y>
       <width>381</width>
       <height>24</height>
      </rect>
@@ -225,7 +199,7 @@
      <x>0</x>
      <y>0</y>
      <width>738</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

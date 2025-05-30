@@ -16,7 +16,7 @@ class foodform : public QDialog
     Q_OBJECT
 
 public:
-    explicit foodform(QWidget *parent = nullptr);
+    explicit foodform(int sex, int height, int weight, int age, QWidget *parent = nullptr);
     ~foodform();
 
 private slots:
@@ -25,7 +25,7 @@ private slots:
     void addNoteToList();
     void toChangeForm();
     void addNoteToDiary();
-    void generateTotalScore();
+    float generateTotalScore();
     void closeWindow();
 
 private:
@@ -34,6 +34,7 @@ private:
     FoodStatistics food_list_object;
     void updateTable();
     void updateDiaryTable();
+    int m_sex, m_height, m_weight, m_age;
 };
 
 #endif // FOODFORM_H
