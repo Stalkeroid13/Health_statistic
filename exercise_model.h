@@ -31,8 +31,6 @@ public:
              int reps,
              int sets);
 
-    void Display() const;
-
     const string& GetKeyName() const;
     const string& GetDisplayName() const;
     ExerciseCategory GetCategory() const;
@@ -48,5 +46,4 @@ public:
     void AddExercise(const Exercise& exercise);
     const vector<Exercise>& GetExercises() const;
     const string& GetDate() const;
-    void Display() const;
 };

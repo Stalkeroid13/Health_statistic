@@ -1,5 +1,4 @@
 #include "exercise_model.h"
-#include <iostream>
 
 using namespace std;
 
@@ -16,13 +15,6 @@ Exercise::Exercise(const string& name_key,
     reps_(reps),
     sets_(sets)
 {}
-
-void Exercise::Display() const {
-    cout << "Вправа: " << name_ukr_
-         << " (" << name_key_ << "), Категорія: " << static_cast<int>(category_)
-         << ", Повторень: " << reps_
-         << ", Підходів: " << sets_ << endl;
-}
 
 const string& Exercise::GetKeyName() const { return name_key_; }
 const string& Exercise::GetDisplayName() const { return name_ukr_; }
@@ -46,10 +38,4 @@ const vector<Exercise>& Workout::GetExercises() const {
 
 const string& Workout::GetDate() const {
     return date_;
-}
-
-void Workout::Display() const {
-    cout << "Тренування за " << date_ << ":\n";
-    for (const auto& ex : exercises_)
-        ex.Display();
 }

@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include "exercise_model.h"
 
 using namespace std;
@@ -15,7 +14,6 @@ struct PhysicalTest
     int Coopers_test;
     int front_jump;
 
-    float GetMassIndex();          // ІМТ
     int GetPhysicalResult() const; // Загальна фізична форма (0–100)
 };
 

@@ -4,13 +4,6 @@
 
 using namespace std;
 
-float PhysicalTest::GetMassIndex()
-{
-    if (height >= 100)
-        height /= 100;
-    return weight / pow(height, 2);
-}
-
 int PhysicalTest::GetPhysicalResult() const
 {
     int result_coef = 0;

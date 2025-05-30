@@ -1,6 +1,4 @@
-#ifndef WORKOUTWINDOW_H
-#define WORKOUTWINDOW_H
-
+#pragma once
 #include <QMainWindow>
 #include "bios.h"
 #include "ideal_exercise_repository.h"
@@ -11,7 +9,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class WorkoutWindow; }
 QT_END_NAMESPACE
 
-class WorkoutWindow : public QMainWindow{
+class WorkoutWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -22,18 +20,19 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
-    void loadExercises();
-    void saveExercises();
-
+    // === Основні поля ===
     string fileName = "Exercise.txt";
     Ui::WorkoutWindow *ui;
     BIOS bios;
+    IdealExerciseRepository idealRepo;
+    PhysicalTest physicalTest;
 
+    // === Основна логіка ===
+    void loadExercises();
+    void saveExercises();
     Workout createWorkoutFromTable();
     void evaluatePerformance();
 
-    IdealExerciseRepository idealRepo;
-    PhysicalTest physicalTest;
+    // === Додаткові можливості ===
+    void showHelpDialog();
 };
-
-#endif // WORKOUTWINDOW_H

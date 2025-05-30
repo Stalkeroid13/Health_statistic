@@ -85,7 +85,7 @@
     </property>
     <property name="dateTime">
      <datetime>
-      <hour>20</hour>
+      <hour>17</hour>
       <minute>0</minute>
       <second>0</second>
       <year>2025</year>
@@ -121,7 +121,7 @@
     </property>
     <property name="dateTime">
      <datetime>
-      <hour>20</hour>
+      <hour>17</hour>
       <minute>0</minute>
       <second>0</second>
       <year>2025</year>
@@ -159,7 +159,7 @@
    <widget class="QPushButton" name="evaluateButton">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>510</x>
       <y>340</y>
       <width>131</width>
       <height>25</height>
@@ -172,14 +172,27 @@
    <widget class="QLabel" name="label_score">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>520</x>
       <y>310</y>
-      <width>101</width>
+      <width>111</width>
       <height>17</height>
      </rect>
     </property>
     <property name="text">
      <string>Оцінка: ?/100</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="helpButton">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>320</y>
+      <width>61</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ІНФО</string>
     </property>
    </widget>
   </widget>

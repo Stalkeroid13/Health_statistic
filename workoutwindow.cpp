@@ -9,6 +9,26 @@
 #include <sstream>
 #include <algorithm>
 
+// --- Текстові утиліти ---
+static string NormalizeUkrainianName(const string& input)
+{
+    string result = input;
+    result.erase(0, result.find_first_not_of(" \t\n\r"));
+    result.erase(result.find_last_not_of(" \t\n\r") + 1);
+    transform(result.begin(), result.end(), result.begin(), ::tolower);
+    replace(result.begin(), result.end(), ' ', '_');
+    return result;
+}
+
+static string DesanitizeName(const string& input)
+{
+    string result = input;
+    replace(result.begin(), result.end(), '_', ' ');
+    return result;
+}
+
+// --- Головна програма ---
+
 WorkoutWindow::WorkoutWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::WorkoutWindow)
@@ -37,6 +57,7 @@ WorkoutWindow::WorkoutWindow(QWidget *parent)
 
     connect(ui->dateEdit_from, &QDateEdit::dateChanged, this, [this](const QDate &) { loadExercises(); });
     connect(ui->dateEdit_to, &QDateEdit::dateChanged, this, [this](const QDate &) { loadExercises(); });
+    connect(ui->helpButton, &QPushButton::clicked, this, &WorkoutWindow::showHelpDialog);
 
     loadExercises();
 }
@@ -50,9 +71,9 @@ auto sanitize = [](const QString& text) {
     return text.trimmed().replace(" ", "_").toStdString();
 };
 
-auto desanitize = [](const std::string& text) {
-    std::string result = text;
-    std::replace(result.begin(), result.end(), '_', ' ');
+auto desanitize = [](const string& text) {
+    string result = text;
+    replace(result.begin(), result.end(), '_', ' ');
     return result;
 };
 
@@ -67,11 +88,11 @@ void WorkoutWindow::loadExercises()
     QDate current = start;
     while (current >= end)
     {
-        std::string date = current.toString("dd.MM.yyyy").toStdString();
+        string date = current.toString("dd.MM.yyyy").toStdString();
         for (const auto& entry : bios.GetValues(date))
         {
-            std::istringstream ss(entry);
-            std::string name_key, muscle;
+            istringstream ss(entry);
+            string name_key, muscle;
             int reps, sets;
             ss >> name_key >> muscle >> reps >> sets;
 
@@ -83,7 +104,7 @@ void WorkoutWindow::loadExercises()
             ui->table->insertRow(row);
             ui->table->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(date)));
             ui->table->setItem(row, 1, new QTableWidgetItem(name_ukr));
-            ui->table->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(desanitize(muscle))));
+            ui->table->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(DesanitizeName(muscle))));
             ui->table->setItem(row, 3, new QTableWidgetItem(QString::number(reps)));
             ui->table->setItem(row, 4, new QTableWidgetItem(QString::number(sets)));
         }
@@ -93,7 +114,7 @@ void WorkoutWindow::loadExercises()
 
 void WorkoutWindow::saveExercises()
 {
-    std::vector<std::string> cleared;
+    vector<string> cleared;
 
     for (int row = 0; row < ui->table->rowCount(); ++row)
     {
@@ -107,21 +128,21 @@ void WorkoutWindow::saveExercises()
         if (nameItem->text().trimmed().isEmpty()) continue;
 
         QString name_ukr = nameItem->text().trimmed();
-        std::string key = idealRepo.GetKeyByUkrName(name_ukr.toStdString());
+        string key = idealRepo.GetKeyByUkrName(NormalizeUkrainianName(name_ukr.toStdString()));
         if (key.empty()) {
             QMessageBox::warning(this, "Помилка", "Невідома вправа: " + name_ukr);
             continue;
         }
 
-        std::string date = dateItem->text().toStdString();
+        string date = dateItem->text().toStdString();
         if (std::find(cleared.begin(), cleared.end(), date) == cleared.end()) {
             bios.RemoveEntry(date);
             cleared.push_back(date);
         }
 
-        std::stringstream ss;
+        stringstream ss;
         ss << key << " "
-           << sanitize(muscleItem->text()) << " "
+           << NormalizeUkrainianName(muscleItem->text().toStdString()) << " "
            << repsItem->text().toInt() << " "
            << setsItem->text().toInt();
 
@@ -142,7 +163,7 @@ Workout WorkoutWindow::createWorkoutFromTable()
         if (!nameItem || !repsItem || !setsItem) continue;
 
         QString name_ukr = nameItem->text().trimmed();
-        std::string key = idealRepo.GetKeyByUkrName(name_ukr.toStdString());
+        string key = idealRepo.GetKeyByUkrName(name_ukr.toStdString());
         if (key.empty()) {
             QMessageBox::warning(this, "Помилка", "Невідома вправа: " + name_ukr);
             continue;
@@ -184,4 +205,14 @@ void WorkoutWindow::closeEvent(QCloseEvent *event)
     saveExercises();
     bios.WriteDataToFile(fileName);
     QMainWindow::closeEvent(event);
+}
+
+void WorkoutWindow::showHelpDialog()
+{
+    QString message = "Ось список доступних вправ і категорій:\n\n";
+
+    for (const auto& [key, meta] : idealRepo.GetAll())
+        message += QString("- %1\n").arg(QString::fromStdString(meta.name_ukr));
+
+    QMessageBox::information(this, "Памʼятка вправ", message);
 }

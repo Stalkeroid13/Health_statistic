@@ -1,9 +1,19 @@
 #include "ideal_exercise_repository.h"
 #include <fstream>
 #include <sstream>
-#include <stdexcept>
+#include <algorithm>
 
 using namespace std;
+
+static string NormalizeUkrainianName(const string& input)
+{
+    string result = input;
+    result.erase(0, result.find_first_not_of(" \t\n\r"));
+    result.erase(result.find_last_not_of(" \t\n\r") + 1);
+    transform(result.begin(), result.end(), result.begin(), ::tolower);
+    replace(result.begin(), result.end(), ' ', '_');
+    return result;
+}
 
 static ExerciseCategory ParseCategory(const string& raw)
 {
@@ -71,10 +81,10 @@ const unordered_map<string, ExerciseMeta>& IdealExerciseRepository::GetAll() con
     return meta_map_;
 }
 
-std::string IdealExerciseRepository::GetKeyByUkrName(const std::string& name_ukr) const
-{
+string IdealExerciseRepository::GetKeyByUkrName(const string& name_ukr) const {
+    string normalized = NormalizeUkrainianName(name_ukr);
     for (const auto& [key, meta] : meta_map_) {
-        if (meta.name_ukr == name_ukr)
+        if (NormalizeUkrainianName(meta.name_ukr) == normalized)
             return key;
     }
     return "";
