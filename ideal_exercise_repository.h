@@ -18,6 +18,8 @@ public:
     // Уся мапа вправ
     const unordered_map<string, ExerciseMeta>& GetAll() const;
 
+    string GetKeyByUkrName(const string& name_ukr) const;
+
 private:
     unordered_map<string, ExerciseMeta> meta_map_;
 };

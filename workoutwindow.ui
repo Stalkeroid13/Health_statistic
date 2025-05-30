@@ -26,9 +26,40 @@
     <property name="maximumSize">
      <size>
       <width>781</width>
-      <height>16777215</height>
+      <height>291</height>
      </size>
     </property>
+    <property name="columnCount">
+     <number>5</number>
+    </property>
+    <attribute name="horizontalHeaderVisible">
+     <bool>true</bool>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Дата</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Вправа</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>М'язи</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Повторення</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Підходи</string>
+     </property>
+    </column>
    </widget>
    <widget class="QPushButton" name="addButton">
     <property name="geometry">
@@ -54,7 +85,7 @@
     </property>
     <property name="dateTime">
      <datetime>
-      <hour>23</hour>
+      <hour>20</hour>
       <minute>0</minute>
       <second>0</second>
       <year>2025</year>
@@ -90,7 +121,7 @@
     </property>
     <property name="dateTime">
      <datetime>
-      <hour>23</hour>
+      <hour>20</hour>
       <minute>0</minute>
       <second>0</second>
       <year>2025</year>
@@ -123,6 +154,32 @@
     </property>
     <property name="text">
      <string>Початкова дата</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="evaluateButton">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>340</y>
+      <width>131</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Дати оцінку</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_score">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>310</y>
+      <width>101</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Оцінка: ?/100</string>
     </property>
    </widget>
   </widget>

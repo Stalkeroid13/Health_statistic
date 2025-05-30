@@ -1,6 +1,7 @@
-// workoutwindow.cpp
 #include "workoutwindow.h"
 #include "ui_workoutwindow.h"
+#include "performance_evaluator.h"
+#include "exercisefactory.h"
 
 #include <QCloseEvent>
 #include <QHeaderView>
@@ -12,10 +13,10 @@ WorkoutWindow::WorkoutWindow(QWidget *parent)
     , ui(new Ui::WorkoutWindow)
 {
     ui->setupUi(this);
-    ui->table->setColumnCount(5);
-    ui->table->setHorizontalHeaderLabels({"Дата", "Вправа", "М'язи", "Повторення", "Підходи"});
+
     ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->table->setEditTriggers(QAbstractItemView::AllEditTriggers);
+    connect(ui->evaluateButton, &QPushButton::clicked, this, &WorkoutWindow::evaluatePerformance);
 
     connect(ui->checkBox_range, &QCheckBox::toggled, this, [this](bool checked) {
         ui->dateEdit_to->setEnabled(checked);
@@ -41,8 +42,21 @@ WorkoutWindow::WorkoutWindow(QWidget *parent)
     loadExercises();
 }
 
-WorkoutWindow::~WorkoutWindow() {
+WorkoutWindow::~WorkoutWindow()
+{
     delete ui;
+    physicalTest = PhysicalTest
+    {
+        70,    // вага
+        175,   // зріст
+        25,    // відтискання
+        35,    // присідання
+        90,    // планка (сек)
+        5,     // тест Купера (км)
+        2,     // гнучкість (1–3)
+        180    // стрибок в довжину (см)
+    };
+    idealRepo.LoadFromFile("ideal_exercises.txt");
 }
 
 auto sanitize = [](const QString& text) {
@@ -134,4 +148,51 @@ void WorkoutWindow::closeEvent(QCloseEvent *event)
     saveExercises();
     bios.WriteDataToFile(fileName);
     QMainWindow::closeEvent(event);
+}
+
+Workout WorkoutWindow::createWorkoutFromTable()
+{
+    QDate date = ui->dateEdit_from->date();
+    Workout workout(date.toString("dd.MM.yyyy").toStdString());
+
+    for (int row = 0; row < ui->table->rowCount(); ++row)
+    {
+        QString name_ukr = ui->table->item(row, 1)->text().trimmed();  // тепер — УКРАЇНСЬКА назва
+        int reps = ui->table->item(row, 3)->text().toInt();
+        int sets = ui->table->item(row, 4)->text().toInt();
+
+        std::string key = idealRepo.GetKeyByUkrName(name_ukr.toStdString());
+        if (key.empty()) continue;
+
+        const ExerciseMeta* meta = idealRepo.Get(key);
+        if (!meta) continue;
+
+        Exercise ex(key, meta->name_ukr, meta->category, reps, sets);
+        workout.AddExercise(ex);
+    }
+
+    return workout;
+}
+
+void WorkoutWindow::evaluatePerformance()
+{
+    Workout w = createWorkoutFromTable();
+    PerformanceEvaluator evaluator(physicalTest);
+
+    double totalScore = 0;
+    int count = 0;
+
+    for (const auto& ex : w.GetExercises()) {
+        const ExerciseMeta* meta = idealRepo.Get(ex.GetKeyName());
+        if (!meta) continue;
+
+        double score = evaluator.EvaluateScore(ex, *meta);
+        totalScore += score;
+        ++count;
+    }
+
+    double average = (count == 0) ? 0.0 : totalScore / count;
+
+    QString resultText = QString("Оцінка: %1 / 100").arg(QString::number(average, 'f', 1));
+    ui->label_score->setText(resultText);
 }

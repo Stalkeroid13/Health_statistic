@@ -70,3 +70,12 @@ const unordered_map<string, ExerciseMeta>& IdealExerciseRepository::GetAll() con
 {
     return meta_map_;
 }
+
+std::string IdealExerciseRepository::GetKeyByUkrName(const std::string& name_ukr) const
+{
+    for (const auto& [key, meta] : meta_map_) {
+        if (meta.name_ukr == name_ukr)
+            return key;
+    }
+    return "";
+}
