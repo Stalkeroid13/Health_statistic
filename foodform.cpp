@@ -3,14 +3,15 @@
 #include "foodchangeinfo.h"
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <QMessageBox>
 
 foodform::foodform(int sex, int height, int weight, int age, QWidget *parent)
     : QDialog(parent), m_sex(sex), m_height(height), m_weight(weight), m_age(age)
     , ui(new Ui::foodform)
 {
     ui->setupUi(this);
-    food_list_object.nutrition_diary_.diary_.LoadDataFromFile("DiaryFood.txt");
-    food_list_object.nutrition_diary_.list_.DownloadData();
+    food_object.nutrition_diary_.diary_.LoadDataFromFile("DiaryFood.txt");
+    food_object.nutrition_diary_.list_.DownloadData();
     connect(ui->pushButton_2, &QPushButton::clicked, this, &foodform::updateList);
     connect(ui->pushButton_4, &QPushButton::clicked, this, &foodform::addNoteToList);
     connect(ui->pushButton_5, &QPushButton::clicked, this, &foodform::toChangeForm);
@@ -25,15 +26,15 @@ foodform::foodform(int sex, int height, int weight, int age, QWidget *parent)
 
 foodform::~foodform()
 {
-    food_list_object.nutrition_diary_.diary_.WriteDataToFile("DiaryFood.txt");
-    food_list_object.nutrition_diary_.list_.UploadData();
+    food_object.nutrition_diary_.diary_.WriteDataToFile("DiaryFood.txt");
+    food_object.nutrition_diary_.list_.UploadData();
     delete ui;
 }
 
 
 void foodform::toChangeForm()
 {
-    foodChangeInfoWindow = new FoodChangeInfo(&food_list_object, this);
+    foodChangeInfoWindow = new FoodChangeInfo(&food_object, this);
     foodChangeInfoWindow->show();
 }
 
@@ -47,10 +48,15 @@ float foodform::generateTotalScore()
     //зчитуємо усю необхідну інформацію
     QString startTime = ui->lineEdit_7->text();
     QString endTime = ui->lineEdit_8->text();
+    if(startTime.isEmpty() || endTime.isEmpty())
+    {
+        QMessageBox::warning(this, "Помилка", "Усі поля дії мають бути заповненими");
+        return 0.0;
+    }
     int strategy = ui->spinBox->value();
 
     // викликаємо функцію визначення оцінки
-    float score=food_list_object.GetStatistics(m_sex, m_weight, m_height, m_age, startTime.toStdString(), endTime.toStdString(), strategy);
+    float score=food_object.GetStatistics(m_sex, m_weight, m_height, m_age, startTime.toStdString(), endTime.toStdString(), strategy);
     ui->label_5->setText(QString::number(score,'f', 2));
 
     return score;
@@ -66,8 +72,16 @@ void foodform::addNoteToList()
     QString foodCarbohydrates = ui->lineEdit_5->text();
     QString foodWeight = ui->lineEdit_6->text();
 
+    if(foodCalorie.isEmpty() || foodName.isEmpty() || foodWeight.isEmpty() ||
+        foodProteins.isEmpty() || foodFats.isEmpty() || foodCarbohydrates.isEmpty())
+    {
+        QMessageBox::warning(this, "Помилка", "Усі поля дії мають бути заповненими");
+        return;
+    }
+
+    foodName.replace(" ", "_");
     QString  fullQ = foodName + " " + foodCalorie + " " + foodProteins + " " + foodFats + " " + foodCarbohydrates + " " + foodWeight;
-    food_list_object.nutrition_diary_.list_.Add(fullQ.toStdString());
+    food_object.nutrition_diary_.list_.Add(fullQ.toStdString());
 
     //очищуємо поля вводу
     ui->lineEdit->clear();
@@ -84,16 +98,23 @@ void foodform::addNoteToDiary()
     QString timeQ = ui->lineEdit_10->text();
     QString foodName = ui->lineEdit_9->text();
     QString foodWeight = ui->lineEdit_14->text();
+    if(timeQ.isEmpty() || foodName.isEmpty() || foodWeight.isEmpty())
+    {
+        QMessageBox::warning(this, "Помилка", "Усі поля мають бути заповненими");
+        return;
+    }
+
+    foodName.replace(" ", "_");
 
     QString  fullQ = foodName + " " + foodWeight;
 
-    if (food_list_object.nutrition_diary_.list_.Read(foodName.toStdString())=="Not found")
+    if (food_object.nutrition_diary_.list_.Read(foodName.toStdString())=="Not found")
     {
         ui->label_4->setText("Cant be added because not found in product list");
     }
     else
     {
-        food_list_object.nutrition_diary_.AddNoteAboutFood(timeQ.toStdString(), fullQ.toStdString());
+        food_object.nutrition_diary_.AddNoteAboutFood(timeQ.toStdString(), fullQ.toStdString());
     }
 
     //очищуємо поля вводу
@@ -113,7 +134,7 @@ void foodform::updateList()
 
     //заповнюємо таблицю
     int row = 0;
-    for (const auto& [name, fullString] : food_list_object.nutrition_diary_.list_.catalogue_) {
+    for (const auto& [name, fullString] : food_object.nutrition_diary_.list_.catalogue_) {
         //model->setItem(row, 0, new QStandardItem(QString::fromStdString(name)));
         model->setItem(row, 0, new QStandardItem(QString::fromStdString(fullString)));
         ++row;
@@ -133,7 +154,7 @@ void foodform::updateDiary()
 
     //заповнюємо таблицю
     int row = 0;
-    for (const auto& [time, fullString] : food_list_object.nutrition_diary_.diary_.general_map_) {
+    for (const auto& [time, fullString] : food_object.nutrition_diary_.diary_.general_map_) {
         model->setItem(row, 0, new QStandardItem(QString::fromStdString(time)));
         model->setItem(row, 1, new QStandardItem(QString::fromStdString(fullString)));
         ++row;

@@ -1,5 +1,6 @@
 #include "foodchangeinfo.h"
 #include "ui_foodchangeinfo.h"
+#include <QMessageBox>
 
 FoodChangeInfo::FoodChangeInfo(FoodStatistics* stats, QWidget *parent)
     : QDialog(parent)
@@ -23,6 +24,15 @@ void FoodChangeInfo::changeDiary()
     QString weightOldQ = ui->lineEdit_29->text();
     QString nameNewQ = ui->lineEdit_27->text();
     QString weightNewQ = ui->lineEdit_28->text();
+    if(timeQ.isEmpty() || nameOldQ.isEmpty() || weightOldQ.isEmpty() ||
+        nameNewQ.isEmpty() || weightNewQ.isEmpty())
+    {
+        QMessageBox::warning(this, "Помилка", "Усі поля дії мають бути заповненими");
+        return;
+    }
+
+    nameOldQ.replace(" ", "_");
+    nameNewQ.replace(" ", "_");
 
     //формуємо повні рядки, що відповідають новому та старому запису відповідно
     string newValue = nameNewQ.toStdString() + " " + weightNewQ.toStdString();
@@ -50,6 +60,14 @@ void FoodChangeInfo::changeList()
     QString foodCarbohydrates = ui->lineEdit_7->text();
     QString foodWeight = ui->lineEdit_8->text();
 
+    if(foodCalorie.isEmpty() || foodName.isEmpty() || foodWeight.isEmpty() ||
+        foodProteins.isEmpty() || foodFats.isEmpty() || foodCarbohydrates.isEmpty())
+    {
+        QMessageBox::warning(this, "Помилка", "Усі поля дії мають бути заповненими");
+        return;
+    }
+
+    foodName.replace(" ", "_");
     //формуємо об'єкт для заміни
     QString  fullQ = foodName + " " + foodCalorie + " " + foodProteins + " " + foodFats + " " + foodCarbohydrates + " " + foodWeight;
 
@@ -71,14 +89,17 @@ void FoodChangeInfo::deleteDiary()
 {
     //зчитуємо усю необхідну інформацію
     QString timeQ = ui->lineEdit_11->text();
+    if(timeQ.isEmpty())
+    {
+        QMessageBox::warning(this, "Помилка", "Усі поля дії мають бути заповненими");
+        return;
+    }
 
     //викликаємо функцію видалення
     mainFoodObject->nutrition_diary_.DeleteNotesAboutFood(timeQ.toStdString());
 
     //очищуємо поля вводу
     ui->lineEdit_11->clear();
-    qDebug() << "Поточна кількість записів у general_map_ після видалення: "
-             << QString::number(mainFoodObject->nutrition_diary_.diary_.general_map_.size());
     return;
 }
 
@@ -90,6 +111,13 @@ void FoodChangeInfo::deleteSpecificDiary()
     QString nameQ = ui->lineEdit_14->text();
     QString weightQ = ui->lineEdit_30->text();
 
+    if(timeQ.isEmpty() || nameQ.isEmpty() || weightQ.isEmpty())
+    {
+        QMessageBox::warning(this, "Помилка", "Усі поля дії мають бути заповненими");
+        return;
+    }
+
+    nameQ.replace(" ", "_");
     //формуємо повний об'єкт для видалення
     string value = nameQ.toStdString() + " " + weightQ.toStdString();
 
@@ -108,6 +136,13 @@ void FoodChangeInfo::deleteList()
 {
     //зчитуємо усю необхідну інформацію
     QString nameQ = ui->lineEdit_2->text();
+    if(nameQ.isEmpty())
+    {
+        QMessageBox::warning(this, "Помилка", "Усі поля дії мають бути заповненими");
+        return;
+    }
+
+    nameQ.replace(" ", "_");
 
     //викликаємо функцію видалення
     mainFoodObject->nutrition_diary_.list_.Remove(nameQ.toStdString());

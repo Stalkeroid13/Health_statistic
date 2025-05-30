@@ -223,7 +223,7 @@
       <item>
        <widget class="QLineEdit" name="lineEdit_8">
         <property name="placeholderText">
-         <string>Маса</string>
+         <string>Маса (г)</string>
         </property>
        </widget>
       </item>
@@ -258,7 +258,7 @@
       <item>
        <widget class="QLineEdit" name="lineEdit_11">
         <property name="placeholderText">
-         <string>Введіть час запису, який бажаєте видалити</string>
+         <string>Введіть час запису, який бажаєте видалити (дд/мм/рр)</string>
         </property>
        </widget>
       </item>
@@ -311,7 +311,7 @@
       <item>
        <widget class="QLineEdit" name="lineEdit_30">
         <property name="placeholderText">
-         <string>Маса страви</string>
+         <string>Маса страви (г)</string>
         </property>
        </widget>
       </item>
@@ -389,7 +389,7 @@
       <item>
        <widget class="QLineEdit" name="lineEdit_28">
         <property name="placeholderText">
-         <string>ЇЇ маса</string>
+         <string>ЇЇ маса (г)</string>
         </property>
        </widget>
       </item>

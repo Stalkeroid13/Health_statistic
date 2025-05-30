@@ -416,7 +416,7 @@
       <item>
        <widget class="QLineEdit" name="lineEdit_6">
         <property name="placeholderText">
-         <string>Вага</string>
+         <string>Маса (г)</string>
         </property>
        </widget>
       </item>
@@ -441,7 +441,7 @@
       <item>
        <widget class="QLineEdit" name="lineEdit_10">
         <property name="placeholderText">
-         <string>Час</string>
+         <string>Час (дд/мм/рр)</string>
         </property>
        </widget>
       </item>
@@ -458,7 +458,7 @@
       <item>
        <widget class="QLineEdit" name="lineEdit_14">
         <property name="placeholderText">
-         <string>Маса</string>
+         <string>Маса (г)</string>
         </property>
        </widget>
       </item>
@@ -629,7 +629,7 @@ QHeaderView::section {
       <item row="0" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Каталог страв і продуктів</string>
+         <string>Список страв і продуктів</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -676,7 +676,7 @@ QHeaderView::section {
       <item>
        <widget class="QLineEdit" name="lineEdit_7">
         <property name="placeholderText">
-         <string>Введіть час початку</string>
+         <string>Введіть час початку (дд/мм/рр)</string>
         </property>
        </widget>
       </item>
@@ -686,7 +686,7 @@ QHeaderView::section {
          <string/>
         </property>
         <property name="placeholderText">
-         <string>Введіть кінцевий час</string>
+         <string>Введіть кінцевий час (дд/мм/рр)</string>
         </property>
        </widget>
       </item>

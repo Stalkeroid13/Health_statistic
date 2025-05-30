@@ -31,7 +31,7 @@ private slots:
 private:
     Ui::foodform *ui;
     FoodChangeInfo *foodChangeInfoWindow;
-    FoodStatistics food_list_object;
+    FoodStatistics food_object;
     void updateTable();
     void updateDiaryTable();
     int m_sex, m_height, m_weight, m_age;
