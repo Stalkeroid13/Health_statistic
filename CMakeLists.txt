@@ -31,14 +31,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         ${RES_FILES}
         bios.h bios.cpp
-        exercise.h exercise.cpp
-        workout.h workout.cpp
+
+
         foodlist.h foodlist.cpp
         foodstatistics.h foodstatistics.cpp
 
         foodform.h foodform.cpp foodform.ui
         foodchangeinfo.h foodchangeinfo.cpp foodchangeinfo.ui
-        exercisefactory.h exercisefactory.cpp
+        exercisefactory.h
         performance_evaluator.h performance_evaluator.cpp
         ideal_exercise_repository.h ideal_exercise_repository.cpp
         physical_test.h physical_test.cpp
@@ -50,7 +50,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         mainwindow.h mainwindow.cpp mainwindow.ui
         workoutwindow.h workoutwindow.cpp workoutwindow.ui
         resources.qrc
-        exercise_meta.h exercise_meta.cpp
+
+        exercise_model.h exercise_model.cpp
 
 
 

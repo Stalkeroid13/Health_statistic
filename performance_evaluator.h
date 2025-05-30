@@ -1,10 +1,8 @@
 #ifndef PERFORMANCE_EVALUATOR_H
 #define PERFORMANCE_EVALUATOR_H
 
-#include <string>
 #include "physical_test.h"
-#include "exercise.h"
-#include "exercise_meta.h"
+#include "exercise_model.h"
 
 class PerformanceEvaluator {
 public:

@@ -2,8 +2,7 @@
 #define EXERCISE_FACTORY_H
 
 #include <string>
-#include "exercise.h"
-#include "exercise_meta.h"
+#include "exercise_model.h"
 
 class ExerciseFactory {
 public:

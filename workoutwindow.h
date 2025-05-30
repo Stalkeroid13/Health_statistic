@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "bios.h"
 #include "ideal_exercise_repository.h"
-#include "workout.h"
+#include "exercise_model.h"
 #include "physical_test.h"
 
 QT_BEGIN_NAMESPACE
