@@ -12,12 +12,8 @@
 // --- Текстові утиліти ---
 static string NormalizeUkrainianName(const string& input)
 {
-    string result = input;
-    result.erase(0, result.find_first_not_of(" \t\n\r"));
-    result.erase(result.find_last_not_of(" \t\n\r") + 1);
-    transform(result.begin(), result.end(), result.begin(), ::tolower);
-    replace(result.begin(), result.end(), ' ', '_');
-    return result;
+    QString qstr = QString::fromStdString(input).trimmed().toLower().replace(" ", "_");
+    return qstr.toStdString();
 }
 
 static string DesanitizeName(const string& input)

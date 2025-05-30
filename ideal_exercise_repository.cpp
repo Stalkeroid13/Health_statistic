@@ -1,18 +1,14 @@
 #include "ideal_exercise_repository.h"
 #include <fstream>
 #include <sstream>
-#include <algorithm>
+#include <QDebug>
 
 using namespace std;
 
 static string NormalizeUkrainianName(const string& input)
 {
-    string result = input;
-    result.erase(0, result.find_first_not_of(" \t\n\r"));
-    result.erase(result.find_last_not_of(" \t\n\r") + 1);
-    transform(result.begin(), result.end(), result.begin(), ::tolower);
-    replace(result.begin(), result.end(), ' ', '_');
-    return result;
+    QString qstr = QString::fromStdString(input).trimmed().toLower().replace(" ", "_");
+    return qstr.toStdString();
 }
 
 static ExerciseCategory ParseCategory(const string& raw)
@@ -83,7 +79,8 @@ const unordered_map<string, ExerciseMeta>& IdealExerciseRepository::GetAll() con
 
 string IdealExerciseRepository::GetKeyByUkrName(const string& name_ukr) const {
     string normalized = NormalizeUkrainianName(name_ukr);
-    for (const auto& [key, meta] : meta_map_) {
+    for (const auto& [key, meta] : meta_map_)
+    {
         if (NormalizeUkrainianName(meta.name_ukr) == normalized)
             return key;
     }
