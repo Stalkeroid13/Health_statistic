@@ -1,7 +1,6 @@
 #include "workoutwindow.h"
 #include "ui_workoutwindow.h"
-#include "performance_evaluator.h"
-#include "exercisefactory.h"
+#include "physical_test.h"
 
 #include <QCloseEvent>
 #include <QMessageBox>
@@ -162,8 +161,6 @@ Workout WorkoutWindow::createWorkoutFromTable()
 void WorkoutWindow::evaluatePerformance()
 {
     Workout w = createWorkoutFromTable();
-    PerformanceEvaluator evaluator(physicalTest);
-
     double total = 0;
     int count = 0;
 
@@ -172,13 +169,14 @@ void WorkoutWindow::evaluatePerformance()
         const ExerciseMeta* meta = idealRepo.Get(ex.GetKeyName());
         if (!meta) continue;
 
-        total += evaluator.EvaluateScore(ex, *meta);
+        total += EvaluateScore(ex, *meta, physicalTest);
         ++count;
     }
 
     double avg = count ? total / count : 0;
     ui->label_score->setText(QString("Оцінка: %1 / 100").arg(QString::number(avg, 'f', 1)));
 }
+
 
 void WorkoutWindow::closeEvent(QCloseEvent *event)
 {

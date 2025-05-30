@@ -1,20 +1,23 @@
-#ifndef PHYSICAL_TEST_H
-#define PHYSICAL_TEST_H
+#pragma once
+#include <string>
+#include "exercise_model.h"
+
+using namespace std;
 
 struct PhysicalTest
 {
-    float weight;    //kilograms
-    float height;    //meters
+    int weight;
+    float height;
+    int push_ups;
+    int sit_downs;
+    int plank;
+    int flexibility;
+    int Coopers_test;
+    int front_jump;
 
-    int push_ups;        //count per 1 min
-    int sit_downs;       //count per 1 min
-    int plank;           //sec
-    int Coopers_test;    //min
-    int flexibility;     //3 steps
-    int front_jump;      //cm
-
-    float GetMassIndex();
-    int GetPhysicalResult() const;
+    float GetMassIndex();          // ІМТ
+    int GetPhysicalResult() const; // Загальна фізична форма (0–100)
 };
 
-#endif
+// Оцінювання вправи — тепер звичайна функція
+double EvaluateScore(const Exercise& actual, const ExerciseMeta& ideal, const PhysicalTest& test);
