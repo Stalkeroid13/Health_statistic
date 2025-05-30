@@ -4,8 +4,8 @@
 #include <QStandardItem>
 #include <QStandardItemModel>
 
-foodform::foodform(QWidget *parent)
-    : QDialog(parent)
+foodform::foodform(int sex, int height, int weight, int age, QWidget *parent)
+    : QDialog(parent), m_sex(sex), m_height(height), m_weight(weight), m_age(age)
     , ui(new Ui::foodform)
 {
     ui->setupUi(this);
@@ -30,6 +30,7 @@ foodform::~foodform()
     delete ui;
 }
 
+
 void foodform::toChangeForm()
 {
     foodChangeInfoWindow = new FoodChangeInfo(&food_list_object, this);
@@ -41,7 +42,7 @@ void foodform::closeWindow()
     this->close();
 }
 
-void foodform::generateTotalScore()
+float foodform::generateTotalScore()
 {
     //зчитуємо усю необхідну інформацію
     QString startTime = ui->lineEdit_7->text();
@@ -49,13 +50,10 @@ void foodform::generateTotalScore()
     int strategy = ui->spinBox->value();
 
     // викликаємо функцію визначення оцінки
-    int sex=1, weight=50, high=168, age=19;
-    float score=food_list_object.GetStatistics(sex, weight, high, age, startTime.toStdString(), endTime.toStdString(), strategy);
+    float score=food_list_object.GetStatistics(m_sex, m_weight, m_height, m_age, startTime.toStdString(), endTime.toStdString(), strategy);
     ui->label_5->setText(QString::number(score,'f', 2));
 
-    //очищуємо поля вводу
-    //ui->lineEdit_7->clear();
-    //ui->lineEdit_8->clear();
+    return score;
 }
 
 void foodform::addNoteToList()
@@ -96,7 +94,6 @@ void foodform::addNoteToDiary()
     else
     {
         food_list_object.nutrition_diary_.AddNoteAboutFood(timeQ.toStdString(), fullQ.toStdString());
-        //updateDiary();
     }
 
     //очищуємо поля вводу
@@ -109,25 +106,21 @@ void foodform::addNoteToDiary()
 void foodform::updateList()
 {
     auto *model = new QStandardItemModel(this);
-    model->setColumnCount(2);
-    model->setHorizontalHeaderLabels({"Назва", "Інформація"});
+    model->setColumnCount(1);
+    model->setHorizontalHeaderLabels({"Інформація"});
     ui->tableView->setStyleSheet("QTableView { color: black; }");
     ui->tableView->setShowGrid(true);
 
     //заповнюємо таблицю
     int row = 0;
     for (const auto& [name, fullString] : food_list_object.nutrition_diary_.list_.catalogue_) {
-        model->setItem(row, 0, new QStandardItem(QString::fromStdString(name)));
-        model->setItem(row, 1, new QStandardItem(QString::fromStdString(fullString)));
+        //model->setItem(row, 0, new QStandardItem(QString::fromStdString(name)));
+        model->setItem(row, 0, new QStandardItem(QString::fromStdString(fullString)));
         ++row;
     }
 
     ui->tableView->setModel(model);
-    ui->tableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
-    ui->tableView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Fixed);
-
-    ui->tableView->setColumnWidth(0, 92);
-    ui->tableView->setColumnWidth(1, 276);
+    ui->tableView->setColumnWidth(0, 368);
 }
 
 //оновлюємо щоденник харчування
