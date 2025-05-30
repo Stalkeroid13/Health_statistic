@@ -1,23 +1,30 @@
-#include <cmath>
-#include <utility>
 #include "workout.h"
+#include <iostream>
 
 using namespace std;
 
-// ---------------------------WORKOUT-----------------------------------------------------------------------------------
-
-Workout::Workout(string date, vector<unique_ptr<Exercise>> exercise_list)
-    : date_(std::move(date)), exercises_(std::move(exercise_list))
+Workout::Workout(const string& date)
+    : date_(date)
 {}
 
-void Workout::AddExercise(unique_ptr<Exercise> exercise)
+void Workout::AddExercise(const Exercise& exercise)
 {
-    exercises_.push_back(std::move(exercise));
+    exercises_.push_back(exercise);  // копія, бо Exercise — легкий обʼєкт
+}
+
+const vector<Exercise>& Workout::GetExercises() const
+{
+    return exercises_;
+}
+
+const string& Workout::GetDate() const
+{
+    return date_;
 }
 
 void Workout::Display() const
 {
-    cout << "Workout on " << date_ << ":\n";
-    for (const auto& exercise: exercises_)
-        exercise->Display();
+    cout << "Тренування за " << date_ << ":\n";
+    for (const auto& ex : exercises_)
+        ex.Display();
 }

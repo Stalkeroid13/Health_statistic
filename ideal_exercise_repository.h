@@ -3,20 +3,23 @@
 
 #include <unordered_map>
 #include <string>
-#include "bios.h"
+#include "exercise_meta.h"
 
 using namespace std;
 
-class IdealExerciseRepository {
+class IdealExerciseRepository
+{
 public:
-    IdealExerciseRepository(const BIOS& bios);
+    bool LoadFromFile(const string& file_name);
 
-    const unordered_map<string, pair<int, int>>& GetAll() const;
+    // Отримати еталон для вправи
+    const ExerciseMeta* Get(const string& exercise_name) const;
+
+    // Уся мапа вправ
+    const unordered_map<string, ExerciseMeta>& GetAll() const;
 
 private:
-    unordered_map<string, pair<int, int>> ideal_data_;
-
-    void LoadFromBIOS(const BIOS& bios);
+    unordered_map<string, ExerciseMeta> meta_map_;
 };
 
-#endif
+#endif // IDEAL_EXERCISE_REPOSITORY_H
