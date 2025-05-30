@@ -1,16 +1,15 @@
-#ifndef EXERCISEFACTORY_H
-#define EXERCISEFACTORY_H
+#ifndef EXERCISE_FACTORY_H
+#define EXERCISE_FACTORY_H
 
 #include <memory>
 #include <string>
 #include "exercise.h"
+#include "exercise_meta.h"
 
-using namespace std;
-
-class ExerciseFactory
-{
+class ExerciseFactory {
 public:
-    static unique_ptr<Exercise> Create(const string& exercise_data);
+    static std::unique_ptr<Exercise> Create(const std::string& name_key,
+                                            const ExerciseMeta& meta);
 };
 
-#endif // EXERCISEFACTORY_H
+#endif // EXERCISE_FACTORY_H

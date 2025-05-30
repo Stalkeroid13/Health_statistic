@@ -1,35 +1,37 @@
 #include "performance_evaluator.h"
+#include <cmath>
 #include <algorithm>
 
 using namespace std;
 
-PerformanceEvaluator::PerformanceEvaluator(const PhysicalTest& physical_test,
-                                           const unordered_map<string, pair<int, int>>& ideal_data)
-    : physical_test_(physical_test), ideal_data_(ideal_data)
+PerformanceEvaluator::PerformanceEvaluator(const PhysicalTest& test)
+    : physical_test_(test)
+{}
+
+// Допускаємо відхилення в 10% без штрафу
+static double CalculateScore(int actual, int ideal)
 {
+    if (ideal == 0) return 0.0;
+
+    double deviation = abs(actual - ideal);
+    double allowed = ideal * 0.1;
+
+    if (deviation <= allowed)
+        return 100.0;
+
+    double over_penalty = (deviation - allowed) / (ideal * 0.02); // 1% штраф за кожні 2% поза зоною
+    return max(0.0, 100.0 - over_penalty);
 }
 
-pair<int, int> PerformanceEvaluator::GetIdealParameters(const string& exercise_name) const
+double PerformanceEvaluator::EvaluateScore(const Exercise& actual, const ExerciseMeta& ideal) const
 {
-    auto it = ideal_data_.find(exercise_name);
-    if (it != ideal_data_.end())
-    {
-        double multiplier = physical_test_.GetPhysicalResult() / 100.0;
-        int ideal_reps = static_cast<int>(it->second.first * multiplier);
-        int ideal_sets = static_cast<int>(it->second.second * multiplier);
-        return { ideal_reps, ideal_sets };
-    }
-     // Значення за замовчуванням
-    return { 13, 4 };
-}
+    // Враховуємо масштабування на основі фізичного тесту
+    double multiplier = physical_test_.GetPhysicalResult() / 100.0;
+    int scaled_reps = static_cast<int>(ideal.ideal_reps * multiplier);
+    int scaled_sets = static_cast<int>(ideal.ideal_sets * multiplier);
 
-double PerformanceEvaluator::EvaluateScore(const string& exercise_name,
-                                           int actual_reps, int actual_sets) const
-{
-    auto [ideal_reps, ideal_sets] = GetIdealParameters(exercise_name);
-
-    double score_reps = min(100.0, (actual_reps / static_cast<double>(ideal_reps)) * 100.0);
-    double score_sets = min(100.0, (actual_sets / static_cast<double>(ideal_sets)) * 100.0);
+    double score_reps = CalculateScore(actual.GetReps(), scaled_reps);
+    double score_sets = CalculateScore(actual.GetSets(), scaled_sets);
 
     return (score_reps + score_sets) / 2.0;
 }

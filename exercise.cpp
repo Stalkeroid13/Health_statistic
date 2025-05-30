@@ -1,31 +1,30 @@
-#include <cmath>
 #include "exercise.h"
+#include <iostream>
 
 using namespace std;
 
-PerformanceExercise::PerformanceExercise(const string& name, const string& muscle_group,
-                                         const PhysicalTest& physical_test, const BIOS& bios)
-    : Exercise(name, muscle_group, 0, 0), physical_test_(physical_test)
+Exercise::Exercise(const string& name_key,
+                   const string& name_ukr,
+                   ExerciseCategory category,
+                   int reps,
+                   int sets)
+    : name_key_(name_key),
+    name_ukr_(name_ukr),
+    category_(category),
+    reps_(reps),
+    sets_(sets)
+{}
+
+void Exercise::Display() const
 {
+    cout << "Вправа: " << name_ukr_
+         << " (" << name_key_ << "), Категорія: " << static_cast<int>(category_)
+         << ", Повторень: " << reps_
+         << ", Підходів: " << sets_ << endl;
 }
 
-// Встановлення параметрів користувача
-void PerformanceExercise::SetUserResult(int actual_reps, int actual_sets, double score)
-{
-    result_.actual_reps = actual_reps;
-    result_.actual_sets = actual_sets;
-    result_.score = score;
-}
-
-double PerformanceExercise::GetPerformanceScore() const
-{
-    return result_.score;
-}
-
-void PerformanceExercise::Display()
-{
-    cout << "Performance Exercise: " << name_ << ", Muscle Group: " << muscle_group_ << endl;
-    cout << "User did " << result_.actual_reps << " reps and " << result_.actual_sets
-         << " sets. Score: " << result_.score << "%" << endl;
-}
-
+const string& Exercise::GetKeyName() const { return name_key_; }
+const string& Exercise::GetDisplayName() const { return name_ukr_; }
+ExerciseCategory Exercise::GetCategory() const { return category_; }
+int Exercise::GetReps() const { return reps_; }
+int Exercise::GetSets() const { return sets_; }

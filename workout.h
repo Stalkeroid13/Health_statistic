@@ -1,26 +1,23 @@
-#ifndef TOGETHER_PROJECT_WORKOUT_H
-#define TOGETHER_PROJECT_WORKOUT_H
+#ifndef WORKOUT_H
+#define WORKOUT_H
 
+#include <string>
 #include <vector>
-#include <memory>
 #include "exercise.h"
 
-using namespace std;
-
-// ---------------------------WORKOUT-----------------------------------------------------------------------------------
-
-class Workout
-{
-private:
-    vector<unique_ptr<Exercise>> exercises_;
-    string date_;
-
+class Workout {
 public:
-    Workout(string date, vector<unique_ptr<Exercise>> exercise_list);
+    Workout(const std::string& date);
 
-    void AddExercise(unique_ptr<Exercise> exercise);
+    void AddExercise(const Exercise& exercise);  // або Exercise ex by value
+    const std::vector<Exercise>& GetExercises() const;
+    const std::string& GetDate() const;
 
     void Display() const;
+
+private:
+    std::string date_;
+    std::vector<Exercise> exercises_;
 };
 
-#endif
+#endif // WORKOUT_H

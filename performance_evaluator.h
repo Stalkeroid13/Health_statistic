@@ -2,24 +2,19 @@
 #define PERFORMANCE_EVALUATOR_H
 
 #include <string>
-#include <unordered_map>
 #include "physical_test.h"
+#include "exercise.h"
+#include "exercise_meta.h"
 
-using namespace std;
-
-class PerformanceEvaluator
-{
+class PerformanceEvaluator {
 public:
-    PerformanceEvaluator(const PhysicalTest& physical_test, const unordered_map<string,
-                        pair<int, int>>& ideal_data);
+    PerformanceEvaluator(const PhysicalTest& test);
 
-    pair<int, int> GetIdealParameters(const string& exercise_name) const;
-
-    double EvaluateScore(const string& exercise_name, int actual_reps, int actual_sets) const;
+    // Повертає бал за конкретну вправу
+    double EvaluateScore(const Exercise& actual, const ExerciseMeta& ideal) const;
 
 private:
     PhysicalTest physical_test_;
-    unordered_map<string, pair<int, int>> ideal_data_;
 };
 
-#endif
+#endif // PERFORMANCE_EVALUATOR_H
