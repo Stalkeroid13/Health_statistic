@@ -1,34 +1,33 @@
 #include "ideal_exercise_repository.h"
 #include "string_utils.h"
-
 #include <fstream>
 #include <sstream>
 #include <QDebug>
 
 using namespace std;
 
-static ExerciseCategory ParseCategory(const string& raw)
+static ExerciseCategory ParseCategory(const string& cat)
 {
-    if (raw == "Chest") return ExerciseCategory::Chest;
-    if (raw == "Back") return ExerciseCategory::Back;
-    if (raw == "Legs") return ExerciseCategory::Legs;
-    if (raw == "Shoulders") return ExerciseCategory::Shoulders;
-    if (raw == "Arms") return ExerciseCategory::Arms;
-    if (raw == "CoreDynamic") return ExerciseCategory::CoreDynamic;
-    if (raw == "CoreIsometric") return ExerciseCategory::CoreIsometric;
-    if (raw == "CardioLight") return ExerciseCategory::CardioLight;
-    if (raw == "CardioIntense") return ExerciseCategory::CardioIntense;
-    if (raw == "EnduranceLower") return ExerciseCategory::EnduranceLower;
-    if (raw == "EnduranceUpper") return ExerciseCategory::EnduranceUpper;
-    if (raw == "Flexibility") return ExerciseCategory::Flexibility;
-    if (raw == "Balance") return ExerciseCategory::Balance;
-    if (raw == "Reaction") return ExerciseCategory::Reaction;
-    if (raw == "Jumping") return ExerciseCategory::Jumping;
-    if (raw == "Speed") return ExerciseCategory::Speed;
-    if (raw == "FullEndurance") return ExerciseCategory::FullEndurance;
-    if (raw == "CooperTest") return ExerciseCategory::CooperTest;
+    if (cat == "Chest") return ExerciseCategory::Chest;
+    if (cat == "Back") return ExerciseCategory::Back;
+    if (cat == "Legs") return ExerciseCategory::Legs;
+    if (cat == "Shoulders") return ExerciseCategory::Shoulders;
+    if (cat == "Arms") return ExerciseCategory::Arms;
+    if (cat == "CoreDynamic") return ExerciseCategory::CoreDynamic;
+    if (cat == "CoreIsometric") return ExerciseCategory::CoreIsometric;
+    if (cat == "CardioLight") return ExerciseCategory::CardioLight;
+    if (cat == "CardioIntense") return ExerciseCategory::CardioIntense;
+    if (cat == "EnduranceLower") return ExerciseCategory::EnduranceLower;
+    if (cat == "EnduranceUpper") return ExerciseCategory::EnduranceUpper;
+    if (cat == "Flexibility") return ExerciseCategory::Flexibility;
+    if (cat == "Balance") return ExerciseCategory::Balance;
+    if (cat == "Reaction") return ExerciseCategory::Reaction;
+    if (cat == "Jumping") return ExerciseCategory::Jumping;
+    if (cat == "Speed") return ExerciseCategory::Speed;
+    if (cat == "FullEndurance") return ExerciseCategory::FullEndurance;
+    if (cat == "CooperTest") return ExerciseCategory::CooperTest;
 
-    throw invalid_argument("Unknown category: " + raw);
+    throw invalid_argument("Unknown category: " + cat);
 }
 
 bool IdealExerciseRepository::LoadFromFile(const string& file_name)

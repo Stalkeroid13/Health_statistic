@@ -94,8 +94,8 @@ void WorkoutWindow::loadExercises()
 
             const ExerciseMeta* meta = idealRepo.Get(name_key);
             QString name_ukr = meta
-                                   ? QString::fromStdString(meta->name_ukr)
-                                   : QString::fromStdString(DesanitizeName(name_key));
+                                   ? DesanitizeToQString(meta->name_ukr)
+                                   : DesanitizeToQString(name_key);
 
             int row = ui->table->rowCount();
             ui->table->insertRow(row);
@@ -204,12 +204,36 @@ void WorkoutWindow::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
+QString GetUnitLabel(ExerciseCategory cat)
+{
+    using C = ExerciseCategory;
+    switch (cat)
+    {
+    case C::Balance:
+    case C::CoreIsometric:
+        return "хв";
+    case C::CardioIntense:
+    case C::CardioLight:
+    case C::Speed:
+    case C::Flexibility:
+        return "сек";
+    case C::CooperTest:
+        return "км";
+    default:
+        return "разів";
+    }
+}
+
 void WorkoutWindow::showHelpDialog()
 {
-    QString message = "Ось список доступних вправ і категорій:\n\n";
+    QString message = "Список доступних вправ:\n\n";
 
     for (const auto& [key, meta] : idealRepo.GetAll())
-        message += QString("- %1\n").arg(QString::fromStdString(meta.name_ukr));
+    {
+        QString name = DesanitizeToQString(meta.name_ukr);
+        QString unit = GetUnitLabel(meta.category);
+        message += QString("- %1 (%2)\n").arg(name, unit);
+    }
 
     QMessageBox::information(this, "Памʼятка вправ", message);
 }

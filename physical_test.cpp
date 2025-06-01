@@ -48,22 +48,38 @@ int PhysicalTest::GetPhysicalResult() const
 // --- Оцінювання результату вправи ---
 static double CalcScore(int actual, int ideal)
 {
-    if (ideal == 0) return 0.0;
-    double deviation = abs(actual - ideal);
-    double allowed = ideal * 0.1;
+    if (ideal <= 0) return 0.0;
 
-    if (deviation <= allowed)
+    double lower_bound = ideal * 0.9;
+    double upper_bound = ideal * 1.5;
+
+    if (actual >= lower_bound && actual <= upper_bound)
         return 100.0;
 
-    double penalty = (deviation - allowed) / (ideal * 0.02);
-    return max(0.0, 100.0 - penalty);
+    // Нижче межі – шкала 0–100 за відхилення від 90% до 0%
+    if (actual < lower_bound)
+    {
+        double severity = 1 - actual / ideal / 0.9;
+        double penalty = severity * 100.0;
+        return max(0.0, 100.0 - penalty);
+    }
+
+    // Вище межі – шкала 0–100 за відхилення від 150% до ∞
+    if (actual > upper_bound)
+    {
+        double severity = actual / ideal / 1.5 - 1;
+        double penalty = severity * 100.0;
+        return max(0.0, 100.0 - penalty);
+    }
+
+    return 0.0;
 }
 
 double EvaluateScore(const Exercise& actual, const ExerciseMeta& ideal, const PhysicalTest& test)
 {
     double scale = test.GetPhysicalResult() / 100.0;
-    int scaled_reps = static_cast<int>(ideal.ideal_reps * scale);
-    int scaled_sets = static_cast<int>(ideal.ideal_sets * scale);
+    int scaled_reps = max(1, static_cast<int>(ideal.ideal_reps * scale));
+    int scaled_sets = max(1, static_cast<int>(ideal.ideal_sets * scale));
 
     double reps_score = CalcScore(actual.GetReps(), scaled_reps);
     double sets_score = CalcScore(actual.GetSets(), scaled_sets);
