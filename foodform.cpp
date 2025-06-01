@@ -129,7 +129,7 @@ void foodform::updateList()
     auto *model = new QStandardItemModel(this);
     model->setColumnCount(1);
     model->setHorizontalHeaderLabels({"Інформація"});
-    ui->tableView->setStyleSheet("QTableView { color: black; }");
+    //ui->tableView->setStyleSheet("QTableView { color: black; }");
     ui->tableView->setShowGrid(true);
 
     //заповнюємо таблицю
