@@ -57,7 +57,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Повідомлення від команди &quot;Неітерабельна ескадрилья&quot;</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
