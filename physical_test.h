@@ -1,8 +1,10 @@
 #pragma once
+
 #include "exercise_model.h"
 
 using namespace std;
 
+// Фізичні показники користувача
 struct PhysicalTest
 {
     int push_ups;
@@ -12,8 +14,9 @@ struct PhysicalTest
     int Coopers_test;
     int front_jump;
 
-    int GetPhysicalResult() const; // Загальна фізична форма (0–100)
+    // Загальна оцінка фізичної форми (0–100)
+    int GetPhysicalResult() const;
 };
 
-// Оцінювання вправи — тепер звичайна функція
+// Оцінка відповідності вправи еталону з урахуванням фізичних даних
 double EvaluateScore(const Exercise& actual, const ExerciseMeta& ideal, const PhysicalTest& test);

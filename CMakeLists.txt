@@ -38,7 +38,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         foodform.h foodform.cpp foodform.ui
         foodchangeinfo.h foodchangeinfo.cpp foodchangeinfo.ui
-        exercisefactory.h
+
 
         ideal_exercise_repository.h ideal_exercise_repository.cpp
         physical_test.h physical_test.cpp

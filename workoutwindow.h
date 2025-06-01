@@ -1,4 +1,5 @@
 #pragma once
+
 #include <QMainWindow>
 #include "bios.h"
 #include "ideal_exercise_repository.h"
@@ -9,7 +10,9 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class WorkoutWindow; }
 QT_END_NAMESPACE
 
-class WorkoutWindow : public QMainWindow {
+// Головне вікно тренувального додатку
+class WorkoutWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
@@ -20,19 +23,27 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
-    // === Основні поля ===
+    // Ім'я файлу з тренуваннями
     string fileName = "Exercise.txt";
+
+    // Вказівник на інтерфейс
     Ui::WorkoutWindow *ui;
+
+    // Джерела даних
     BIOS bios;
     IdealExerciseRepository idealRepo;
     PhysicalTest physicalTest;
 
-    // === Основна логіка ===
+    // Завантаження і збереження вправ
     void loadExercises();
     void saveExercises();
+
+    // Створення об'єкта тренування
     Workout createWorkoutFromTable();
+
+    // Оцінювання продуктивності
     void evaluatePerformance();
 
-    // === Додаткові можливості ===
+    // Вікно пам'ятки вправ
     void showHelpDialog();
 };

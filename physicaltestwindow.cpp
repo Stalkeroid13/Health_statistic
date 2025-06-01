@@ -5,6 +5,8 @@
 #include <QTextStream>
 #include <QMessageBox>
 
+// --- Конструктор інтерфейсу ---
+
 PhysicalTestWindow::PhysicalTestWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PhysicalTestWindow)
@@ -20,6 +22,7 @@ PhysicalTestWindow::~PhysicalTestWindow()
     delete ui;
 }
 
+// Зберігає дані з таблиці у файл
 void PhysicalTestWindow::savePhysicalData()
 {
     QFile file("profile.txt");
@@ -27,15 +30,22 @@ void PhysicalTestWindow::savePhysicalData()
 
     QTextStream out(&file);
     QTableWidget* table = ui->table;
-    for (int col = 0; col < table->columnCount(); ++col) {
+
+    // Прохід по всіх колонках рядка
+    for (int col = 0; col < table->columnCount(); ++col)
+    {
         QTableWidgetItem* item = table->item(0, col);
         QString value = item ? item->text().trimmed() : "";
+
+        // Перевірка на порожні значення
         if (value.isEmpty())
         {
             QMessageBox::warning(this, "Помилка", "Усі поля повинні бути заповнені.");
             return;
         }
+
         out << value;
+
         if (col != table->columnCount() - 1)
             out << " ";
     }
@@ -44,18 +54,23 @@ void PhysicalTestWindow::savePhysicalData()
     this->close();
 }
 
+// Завантажує дані з файлу у таблицю
 void PhysicalTestWindow::loadFromFile(const QString& filename)
 {
     QFile file(filename);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
 
     QTextStream in(&file);
-    for (int col = 0; col < ui->table->columnCount(); ++col) {
+
+    // Зчитування значень у перший рядок таблиці
+    for (int col = 0; col < ui->table->columnCount(); ++col)
+    {
         QString value;
         in >> value;
 
         QTableWidgetItem* item = new QTableWidgetItem(value);
         ui->table->setItem(0, col, item);
     }
+
     file.close();
 }

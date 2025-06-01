@@ -1,10 +1,12 @@
 #include "ideal_exercise_repository.h"
 #include "string_utils.h"
+
 #include <fstream>
 #include <sstream>
-#include <QDebug>
 
 using namespace std;
+
+// --- Парсинг категорії з тексту ---
 
 static ExerciseCategory ParseCategory(const string& cat)
 {
@@ -30,30 +32,39 @@ static ExerciseCategory ParseCategory(const string& cat)
     throw invalid_argument("Unknown category: " + cat);
 }
 
+// Завантаження еталонів з файлу
 bool IdealExerciseRepository::LoadFromFile(const string& file_name)
 {
     ifstream file(file_name);
-    if (!file.is_open()) return false;
+    if (!file.is_open())
+        return false;
 
+    // Очищення хеш-таблиці перед новим завантаженням
     meta_map_.clear();
     string line;
 
+    // Зчитування рядків з файлу
     while (getline(file, line))
     {
         istringstream ss(line);
         string key, name_ukr, cat_str;
         int reps, sets;
 
+        // Пропуск рядка, якщо формат некоректний
         if (!(ss >> key >> name_ukr >> cat_str >> reps >> sets))
             continue;
 
+        // Перетворення категорії у значення enum
         ExerciseCategory category = ParseCategory(cat_str);
+
+        // Додавання запису у хеш-таблицю
         meta_map_[key] = ExerciseMeta{ name_ukr, category, reps, sets };
     }
 
     return true;
 }
 
+// Пошук еталона за ключем
 const ExerciseMeta* IdealExerciseRepository::Get(const string& exercise_name) const
 {
     auto it = meta_map_.find(exercise_name);
@@ -62,12 +73,15 @@ const ExerciseMeta* IdealExerciseRepository::Get(const string& exercise_name) co
     return nullptr;
 }
 
+// Отримати всю таблицю еталонів
 const unordered_map<string, ExerciseMeta>& IdealExerciseRepository::GetAll() const
 {
     return meta_map_;
 }
 
-string IdealExerciseRepository::GetKeyByUkrName(const string& name_ukr) const {
+// Знайти ключ за українською назвою вправи
+string IdealExerciseRepository::GetKeyByUkrName(const string& name_ukr) const
+{
     string normalized = NormalizeUkrainianName(name_ukr);
     for (const auto& [key, meta] : meta_map_)
     {

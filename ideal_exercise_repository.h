@@ -1,5 +1,4 @@
-#ifndef IDEAL_EXERCISE_REPOSITORY_H
-#define IDEAL_EXERCISE_REPOSITORY_H
+#pragma once
 
 #include <unordered_map>
 #include <string>
@@ -7,21 +6,23 @@
 
 using namespace std;
 
+// Репозиторій з еталонними вправами
 class IdealExerciseRepository
 {
 public:
+    // Завантаження еталонів з файлу
     bool LoadFromFile(const string& file_name);
 
-    // Отримати еталон для вправи
+    // Пошук еталона за ключем
     const ExerciseMeta* Get(const string& exercise_name) const;
 
-    // Уся мапа вправ
+    // Отримати всю таблицю еталонів
     const unordered_map<string, ExerciseMeta>& GetAll() const;
 
+    // Знайти ключ за українською назвою вправи
     string GetKeyByUkrName(const string& name_ukr) const;
 
 private:
+    // Мапа (ключ - еталон вправи)
     unordered_map<string, ExerciseMeta> meta_map_;
 };
-
-#endif // IDEAL_EXERCISE_REPOSITORY_H

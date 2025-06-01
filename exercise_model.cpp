@@ -4,6 +4,7 @@ using namespace std;
 
 // --- Exercise ---
 
+// Ініціалізація об'єкта вправи
 Exercise::Exercise(const string& name_key,
                    const string& name_ukr,
                    ExerciseCategory category,
@@ -16,26 +17,56 @@ Exercise::Exercise(const string& name_key,
     sets_(sets)
 {}
 
-const string& Exercise::GetKeyName() const { return name_key_; }
-const string& Exercise::GetDisplayName() const { return name_ukr_; }
-ExerciseCategory Exercise::GetCategory() const { return category_; }
-int Exercise::GetReps() const { return reps_; }
-int Exercise::GetSets() const { return sets_; }
+// Отримати технічний ключ
+const string& Exercise::GetKeyName() const
+{
+    return name_key_;
+}
+
+// Отримати українську назву
+const string& Exercise::GetDisplayName() const
+{
+    return name_ukr_;
+}
+
+// Отримати категорію вправи
+ExerciseCategory Exercise::GetCategory() const
+{
+    return category_;
+}
+
+// Отримати кількість повторень
+int Exercise::GetReps() const
+{
+    return reps_;
+}
+
+// Отримати кількість підходів
+int Exercise::GetSets() const
+{
+    return sets_;
+}
 
 // --- Workout ---
 
-Workout::Workout(const string& date)
-    : date_(date)
+// Ініціалізація об'єкта тренування з датою
+Workout::Workout(const string& date): date_(date)
 {}
 
-void Workout::AddExercise(const Exercise& exercise) {
+// Додати вправу до тренування
+void Workout::AddExercise(const Exercise& exercise)
+{
     exercises_.push_back(exercise);
 }
 
-const vector<Exercise>& Workout::GetExercises() const {
+// Отримати всі вправи
+const vector<Exercise>& Workout::GetExercises() const
+{
     return exercises_;
 }
 
-const string& Workout::GetDate() const {
+// Отримати дату тренування
+const string& Workout::GetDate() const
+{
     return date_;
 }

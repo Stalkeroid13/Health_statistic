@@ -2,6 +2,8 @@
 
 using namespace std;
 
+// --- Загальна оцінка фізичної форми (0–100) ---
+
 int PhysicalTest::GetPhysicalResult() const
 {
     int result_coef = 0;
@@ -45,10 +47,12 @@ int PhysicalTest::GetPhysicalResult() const
     return result_coef;
 }
 
-// --- Оцінювання результату вправи ---
+// --- Оцінка відповідності вправи еталону з урахуванням фізичних даних ---
+
 static double CalcScore(int actual, int ideal)
 {
-    if (ideal <= 0) return 0.0;
+    if (ideal <= 0)
+        return 0.0;
 
     double lower_bound = ideal * 0.9;
     double upper_bound = ideal * 1.5;
@@ -64,7 +68,7 @@ static double CalcScore(int actual, int ideal)
         return max(0.0, 100.0 - penalty);
     }
 
-    // Вище межі – шкала 0–100 за відхилення від 150% до ∞
+    // Вище межі – шкала 0–100 за відхилення від 150% до inf
     if (actual > upper_bound)
     {
         double severity = actual / ideal / 1.5 - 1;
@@ -75,14 +79,18 @@ static double CalcScore(int actual, int ideal)
     return 0.0;
 }
 
+// Оцінка відповідності вправи еталону з урахуванням фізичних даних
 double EvaluateScore(const Exercise& actual, const ExerciseMeta& ideal, const PhysicalTest& test)
 {
+    // Масштабування еталонних значень відповідно до фізичної форми
     double scale = test.GetPhysicalResult() / 100.0;
     int scaled_reps = max(1, static_cast<int>(ideal.ideal_reps * scale));
     int scaled_sets = max(1, static_cast<int>(ideal.ideal_sets * scale));
 
+    // Оцінка за кількістю повторень і підходів
     double reps_score = CalcScore(actual.GetReps(), scaled_reps);
     double sets_score = CalcScore(actual.GetSets(), scaled_sets);
 
+    // Повертаємо середню оцінку
     return (reps_score + sets_score) / 2.0;
 }
