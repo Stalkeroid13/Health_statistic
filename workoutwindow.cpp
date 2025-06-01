@@ -2,6 +2,7 @@
 #include "ui_workoutwindow.h"
 #include "physical_test.h"
 #include "physicaltestwindow.h"
+#include "string_utils.h"
 
 #include <QCloseEvent>
 #include <QMessageBox>
@@ -10,20 +11,6 @@
 #include <Qfile>
 #include <sstream>
 #include <algorithm>
-
-// --- Текстові утиліти ---
-static string NormalizeUkrainianName(const string& input)
-{
-    QString qstr = QString::fromStdString(input).trimmed().toLower().replace(" ", "_");
-    return qstr.toStdString();
-}
-
-static string DesanitizeName(const string& input)
-{
-    string result = input;
-    replace(result.begin(), result.end(), '_', ' ');
-    return result;
-}
 
 // --- Головна програма ---
 PhysicalTest LoadPhysicalTestFromFile(const QString& filename)
@@ -86,16 +73,6 @@ WorkoutWindow::~WorkoutWindow()
     delete ui;
 }
 
-auto sanitize = [](const QString& text) {
-    return text.trimmed().replace(" ", "_").toStdString();
-};
-
-auto desanitize = [](const string& text) {
-    string result = text;
-    replace(result.begin(), result.end(), '_', ' ');
-    return result;
-};
-
 void WorkoutWindow::loadExercises()
 {
     bios.LoadDataFromFile(fileName);
@@ -116,8 +93,9 @@ void WorkoutWindow::loadExercises()
             ss >> name_key >> muscle >> reps >> sets;
 
             const ExerciseMeta* meta = idealRepo.Get(name_key);
-            QString name_ukr = meta ? QString::fromStdString(meta->name_ukr)
-                                    : QString::fromStdString(name_key);
+            QString name_ukr = meta
+                                   ? QString::fromStdString(meta->name_ukr)
+                                   : QString::fromStdString(DesanitizeName(name_key));
 
             int row = ui->table->rowCount();
             ui->table->insertRow(row);

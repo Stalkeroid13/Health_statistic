@@ -53,6 +53,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         exercise_model.h exercise_model.cpp
         physicaltestwindow.h physicaltestwindow.cpp physicaltestwindow.ui
+        string_utils.h string_utils.cpp
 
 
 

@@ -1,15 +1,11 @@
 #include "ideal_exercise_repository.h"
+#include "string_utils.h"
+
 #include <fstream>
 #include <sstream>
 #include <QDebug>
 
 using namespace std;
-
-static string NormalizeUkrainianName(const string& input)
-{
-    QString qstr = QString::fromStdString(input).trimmed().toLower().replace(" ", "_");
-    return qstr.toStdString();
-}
 
 static ExerciseCategory ParseCategory(const string& raw)
 {
@@ -52,13 +48,8 @@ bool IdealExerciseRepository::LoadFromFile(const string& file_name)
         if (!(ss >> key >> name_ukr >> cat_str >> reps >> sets))
             continue;
 
-        try {
-            ExerciseCategory category = ParseCategory(cat_str);
-            meta_map_[key] = ExerciseMeta{ name_ukr, category, reps, sets };
-        }
-        catch (const invalid_argument&) {
-            continue; // пропускаємо помилкову категорію
-        }
+        ExerciseCategory category = ParseCategory(cat_str);
+        meta_map_[key] = ExerciseMeta{ name_ukr, category, reps, sets };
     }
 
     return true;

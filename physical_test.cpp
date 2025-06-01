@@ -1,6 +1,4 @@
 #include "physical_test.h"
-#include <cmath>
-#include <algorithm>
 
 using namespace std;
 
