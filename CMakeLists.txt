@@ -52,6 +52,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         resources.qrc
 
         exercise_model.h exercise_model.cpp
+        physicaltestwindow.h physicaltestwindow.cpp physicaltestwindow.ui
 
 
 

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PhysicalTestWindow</class>
+ <widget class="QMainWindow" name="PhysicalTestWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>644</width>
+    <height>278</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Фізичні характеристики</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTableWidget" name="table">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>621</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+      <horstretch>4</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <column>
+     <property name="text">
+      <string>Відтискання</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Присідання</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Планка</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Гнучкість</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Тест Купера</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Стрибки</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>381</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Відтискання - максимальна кількість за 1 підхід
+Присідання - максимальна кількість за 1 підхід
+Планка - скільки секунд можете тримати планку без перерви
+Гнучкість:
+    1 - не дотягнувся до пальців ніг
+    2 - торкнувся пальців
+    3 - дотягнувся далі
+Тест Купера - скільки кілометрів пробігли за 12 хв
+Стрибки у довжину - довжина стрибка з місця в сантиметрах</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveButton">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>140</y>
+      <width>121</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Зберегти</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>644</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

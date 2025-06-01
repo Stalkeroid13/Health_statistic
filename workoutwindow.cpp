@@ -1,11 +1,13 @@
 #include "workoutwindow.h"
 #include "ui_workoutwindow.h"
 #include "physical_test.h"
+#include "physicaltestwindow.h"
 
 #include <QCloseEvent>
 #include <QMessageBox>
 #include <QHeaderView>
 #include <QTableWidgetItem>
+#include <Qfile>
 #include <sstream>
 #include <algorithm>
 
@@ -24,6 +26,18 @@ static string DesanitizeName(const string& input)
 }
 
 // --- Головна програма ---
+PhysicalTest LoadPhysicalTestFromFile(const QString& filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+    QTextStream in(&file);
+    int pu, sd, plank, flex, coop, jump;
+    in >> pu >> sd >> plank >> flex >> coop >> jump;
+
+    file.close();
+    return PhysicalTest{pu, sd, plank, flex, coop, jump};
+}
 
 WorkoutWindow::WorkoutWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,10 +45,13 @@ WorkoutWindow::WorkoutWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->dateEdit_from->setDate(QDate::currentDate());
+    ui->dateEdit_to->setDate(QDate::currentDate().addDays(-1));
+
     ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->table->setEditTriggers(QAbstractItemView::AllEditTriggers);
 
-    physicalTest = PhysicalTest{70, 175, 25, 35, 90, 5, 2, 180};
+    physicalTest = LoadPhysicalTestFromFile("profile.txt");
     idealRepo.LoadFromFile("ideal_exercises.txt");
 
     connect(ui->addButton, &QPushButton::clicked, this, [=]() {
@@ -54,6 +71,12 @@ WorkoutWindow::WorkoutWindow(QWidget *parent)
     connect(ui->dateEdit_from, &QDateEdit::dateChanged, this, [this](const QDate &) { loadExercises(); });
     connect(ui->dateEdit_to, &QDateEdit::dateChanged, this, [this](const QDate &) { loadExercises(); });
     connect(ui->helpButton, &QPushButton::clicked, this, &WorkoutWindow::showHelpDialog);
+
+    connect(ui->openProfileButton, &QPushButton::clicked, this, [=]() {
+        auto* form = new PhysicalTestWindow(this);
+        form->loadFromFile();
+        form->show();
+    });
 
     loadExercises();
 }

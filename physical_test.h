@@ -5,8 +5,6 @@ using namespace std;
 
 struct PhysicalTest
 {
-    int weight;
-    float height;
     int push_ups;
     int sit_downs;
     int plank;
