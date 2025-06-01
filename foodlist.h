@@ -17,7 +17,7 @@ struct Product
     friend istream& operator>>(istream& stream, Product& object);
     Product();
     string ProductToString();
-    Product StringToProduct(string info);//THINK ABOUT
+    Product StringToProduct(string info);
 };
 
 class FoodList

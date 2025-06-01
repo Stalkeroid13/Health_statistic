@@ -16,9 +16,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
+        <red>170</red>
         <green>170</green>
-        <blue>127</blue>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
@@ -27,9 +27,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
+        <red>170</red>
         <green>170</green>
-        <blue>127</blue>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
@@ -38,23 +38,30 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
+        <red>170</red>
         <green>170</green>
-        <blue>127</blue>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>85</red>
+        <red>170</red>
         <green>170</green>
-        <blue>127</blue>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
     </disabled>
    </palette>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>9</pointsize>
+    <italic>true</italic>
+    <bold>false</bold>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Повідомлення від команди &quot;Неітерабельна ескадрилья&quot;</string>
@@ -62,7 +69,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>70</x>
      <y>120</y>
      <width>291</width>
      <height>51</height>

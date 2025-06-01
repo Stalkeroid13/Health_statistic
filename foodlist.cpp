@@ -23,23 +23,6 @@ ostream& operator<<(ostream& stream, const Product& object)
                                            carbohydrates << endl << "Weight: " << object.weight << endl);
 }
 
-istream& operator>>(istream& stream, Product& object)
-{
-    cout << "Enter product name: ";
-    stream >> object.name;
-    cout << "Enter calories in food: ";
-    stream >> object.caloriesInFood;
-    cout << "Enter proteins: ";
-    stream >> object.proteins;
-    cout << "Enter fats: ";
-    stream >> object.fats;
-    cout << "Enter carbohydrates: ";
-    stream >> object.carbohydrates;
-    cout << "Enter weight: ";
-    stream >> object.weight;
-    return stream;
-}
-
 string Product::ProductToString()
 {
     stringstream st;
@@ -84,23 +67,12 @@ void FoodList::Add(string object)
     getline(stream,name,' ');
     getline(stream,temp,'\n');
 
-    //auto ip=catalogue_.begin();
-    //auto& prod=catalogue_[name];
     for(const auto& [key,value]:catalogue_)
     {
         if(value==object)
             return;
     }
-    /*for(ip;ip!=catalogue_.end();ip++)
-    {
-        temp=ip->second;
-        if(temp.find(token)!=string::npos)
-        {
-            //cout<<"Продукт з такими характеристиками вже є в каталозі продуктів і страв:"<<endl;
-            //cout<<temp<<endl;
-            return;
-        }
-    }*/
+
     catalogue_.insert({name,object});
 }
 
